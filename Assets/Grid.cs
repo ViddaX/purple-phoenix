@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace pp {
 
@@ -11,15 +12,22 @@ namespace pp {
 		private const int gridLayerMask = 1 << 8; // Grid is on layer 8
 		private const int gridWidth = 30;
 		private const int gridHeight = 16;
-		private const float tileOffsetY = 0.2f;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
 		private Block lastPlaced;
 
 		// Selection parameters
-		public BlockType selected { set; get; } // The block type to spawn
-		public Block[] targets; // Certain blocks need to interact with a target (i.e. robot arm)
+		private const int MODE_MODIFY = 1; // Add or remove a block
+		private const int MODE_SELECT_TARGET = 2; // Select a block target
+		private int mode = MODE_MODIFY;
+		private Queue<Block> targets = new Queue<Block>(); // List of targets for RobotArm
+		public BlockType spawnType { set; get; } // The block type to spawn
+		public Recipe currentRecipe { set; get; } // Recipe for new combiners
+		public Vector2 mark { set; get; }
 
 		public void Awake() {
+			// FIXME Testing code
+			currentRecipe = new Recipe(ItemType.IRON_SHEET, new RecipePiece(ItemType.IRON_SHEET, 3));
+
 			// Add a single spawner
 			Spawner spawner = new Spawner();
 			spawner.nextItem = ItemType.IRON_SHEET;
@@ -45,12 +53,11 @@ namespace pp {
 			int x = (int) ((offset.x / GetPlaneWidth()) * gridWidth);
 			int y = (int) ((offset.z / GetPlaneHeight()) * gridHeight);
 
-			if (Get(x, y) != null)
-				return; // Already something there
-
-			Block created = CreateBlock(selected);
-			if (created != null)
-				Set(x, y, created);
+			if (mode) {
+				OnModify(x, y);
+			} else {
+				OnSelectTarget(x, y);
+			}
 		}
 
 		public void Set(int x, int y, Block block) {
@@ -81,12 +88,38 @@ namespace pp {
 			return blocks[x, y];
 		}
 
-		public Block CreateBlock(BlockType type) {
+		public void OnModify(int x, int y) {
+			if (spawnType == BlockType.GRABBER) {
+				mode = MODE_SELECT_TARGET;
+				mark = new Vector2(x, y);
+				return;
+			}
+
+			Block created = CreateBasicBlock(spawnType);
+			if (created != null)
+				Set(x, y, created);
+		}
+
+		public void OnSelectTarget(int x, int y) {
+			if (spawnType != BlockType.GRABBER)
+				throw new ArgumentException();
+
+			Block selected = Get(x, y);
+			if (selected != null) {
+				targets.Enqueue();
+				if (targets.Count == 2)
+					Set(x, y, new RoboticArm(targets.Dequeue(), targets.Dequeue()));
+			} else {
+				mode = MODE_MODIFY;
+				targets.Clear();
+				// TODO 'No block selected' Error message
+			}
+		}
+
+		public Block CreateBasicBlock(BlockType type) {
 			switch (type) {
 				case BlockType.CONVEYOR:
 					return new Conveyor();
-				case BlockType.GRABBER:
-					return new RoboticArm(null, null); // TODO Find targets
 				case BlockType.COMBINER:
 					return new Combiner(currentRecipe);
 				default:
@@ -120,7 +153,7 @@ namespace pp {
 		public Vector3 GridToWorld(int x, int y) {
 			Vector3 world = GetPlaneOrigin();
 			world.x += (x * GetTileWidth()) + (GetTileWidth() / 2);
-			world.y += tileOffsetY;
+			world.y += 0.2f;
 			world.z += (y * GetTileHeight()) + (GetTileHeight() / 2);
 			return world;
 		}
