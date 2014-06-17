@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System;
 namespace pp {
 	/// <summary>
 	/// A block which transports items.
@@ -13,9 +13,10 @@ namespace pp {
 			timeTaken = 0.5f;
 		}
 
-		public Conveyor(string prefab) : base(prefab) {
+		public Conveyor(BlockType type, string prefab) : base(type, prefab) {
 			gameObject.AddComponent<ConveyorBehaviour>().p = this;
 			height = 0.5f;
+		
 		}
 
 		public override void OnEnter(Item item) {

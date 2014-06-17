@@ -16,7 +16,7 @@ namespace pp {
 		public Spawner() : this(BlockType.SPAWNER, "spawner") {
 		}
 
-		public Spawner(string prefab) : base(prefab) {
+		public Spawner(BlockType type,string prefab) : base(type,prefab) {
 			gameObject.AddComponent<SpawnerBehaviour>().p = this;
 		}
 

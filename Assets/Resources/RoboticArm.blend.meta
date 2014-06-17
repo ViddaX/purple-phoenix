@@ -1,0 +1,135 @@
+fileFormatVersion: 2
+guid: e716834de6015ee498090bd6283a842e
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: arm1
+    100002: arm2
+    100004: arm3
+    100006: arm4
+    100008: arm_1_bone
+    100010: arm_2_bone
+    100012: arm_3_bone
+    100014: arm_4_bone
+    100016: base
+    100018: base_bone
+    100020: bottom_finger_contrl_bone
+    100022: bottomfinger_1
+    100024: bottomfinger_2
+    100026: bottomfinger_bone_1
+    100028: bottomfinger_bone_2
+    100030: hand
+    100032: hand_bone
+    100034: robot_armature
+    100036: //RootNode
+    100038: top_finger_contrl_bone
+    100040: topfinger_1
+    100042: topfinger_2
+    100044: topfinger_bone_1
+    100046: topfinger_bone_2
+    100048: turret
+    100050: turret_bone
+    400000: arm1
+    400002: arm2
+    400004: arm3
+    400006: arm4
+    400008: arm_1_bone
+    400010: arm_2_bone
+    400012: arm_3_bone
+    400014: arm_4_bone
+    400016: base
+    400018: base_bone
+    400020: bottom_finger_contrl_bone
+    400022: bottomfinger_1
+    400024: bottomfinger_2
+    400026: bottomfinger_bone_1
+    400028: bottomfinger_bone_2
+    400030: hand
+    400032: hand_bone
+    400034: robot_armature
+    400036: //RootNode
+    400038: top_finger_contrl_bone
+    400040: topfinger_1
+    400042: topfinger_2
+    400044: topfinger_bone_1
+    400046: topfinger_bone_2
+    400048: turret
+    400050: turret_bone
+    4300000: arm1
+    4300002: arm2
+    4300004: arm3
+    4300006: arm4
+    4300008: base
+    4300010: bottomfinger_1
+    4300012: bottomfinger_2
+    4300014: hand
+    4300016: topfinger_1
+    4300018: topfinger_2
+    4300020: turret
+    7400000: Default Take
+    9500000: //RootNode
+    13700000: arm1
+    13700002: arm2
+    13700004: arm3
+    13700006: arm4
+    13700008: base
+    13700010: bottomfinger_1
+    13700012: bottomfinger_2
+    13700014: hand
+    13700016: topfinger_1
+    13700018: topfinger_2
+    13700020: turret
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .200000003
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

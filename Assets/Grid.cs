@@ -50,6 +50,7 @@ namespace pp {
 				Set(x, y, new Conveyor());
 				break;
 			case BlockType.GRABBER:
+				Set (x, y , new RoboticArm(null,null));
 				break;
 			case BlockType.COMBINER:
 				// Test code
