@@ -67,7 +67,9 @@ ModelImporter:
     4300018: topfinger_2
     4300020: turret
     7400000: Default Take
+    7400002: Default Take0
     9500000: //RootNode
+    11100000: //RootNode
     13700000: arm1
     13700002: arm2
     13700004: arm3
@@ -88,13 +90,169 @@ ModelImporter:
     bakeSimulation: 0
     optimizeGameObjects: 0
     motionNodeName: 
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Default Take
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 249
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: arm1
+        weight: 1
+      - path: arm2
+        weight: 1
+      - path: arm3
+        weight: 1
+      - path: arm4
+        weight: 1
+      - path: base
+        weight: 1
+      - path: bottomfinger_1
+        weight: 1
+      - path: bottomfinger_2
+        weight: 1
+      - path: hand
+        weight: 1
+      - path: robot_armature
+        weight: 1
+      - path: robot_armature/base_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/bottom_finger_contrl_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/bottomfinger_bone_1
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/bottomfinger_bone_1/bottomfinger_bone_2
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/top_finger_contrl_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/topfinger_bone_1
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/topfinger_bone_1/topfinger_bone_2
+        weight: 1
+      - path: topfinger_1
+        weight: 1
+      - path: topfinger_2
+        weight: 1
+      - path: turret
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Default Take0
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 249
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 1
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: arm1
+        weight: 1
+      - path: arm2
+        weight: 1
+      - path: arm3
+        weight: 1
+      - path: arm4
+        weight: 1
+      - path: base
+        weight: 1
+      - path: bottomfinger_1
+        weight: 1
+      - path: bottomfinger_2
+        weight: 1
+      - path: hand
+        weight: 1
+      - path: robot_armature
+        weight: 1
+      - path: robot_armature/base_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/bottom_finger_contrl_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/bottomfinger_bone_1
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/bottomfinger_bone_1/bottomfinger_bone_2
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/top_finger_contrl_bone
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/topfinger_bone_1
+        weight: 1
+      - path: robot_armature/base_bone/turret_bone/arm_1_bone/arm_2_bone/arm_3_bone/arm_4_bone/hand_bone/topfinger_bone_1/topfinger_bone_2
+        weight: 1
+      - path: topfinger_1
+        weight: 1
+      - path: topfinger_2
+        weight: 1
+      - path: turret
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

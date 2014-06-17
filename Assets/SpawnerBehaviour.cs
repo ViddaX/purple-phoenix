@@ -10,11 +10,12 @@ namespace pp {
 				return;
 			
 			// Time to spawn an item
-			if (p.nextItem != ItemType.NONE && p.nextBlock != null) {
+			if (p.nextItem != ItemType.NONE) {
 				Item item = Spawner.Spawn(p.nextItem);
-				p.ResetSpawnTimer();
+				item.worldPosition = p.worldPosition;
 
-				p.items.Enqueue(item);
+				p.ResetSpawnTimer();
+				p.OnEnter(item);
 			}
 		}
 	}
