@@ -96,9 +96,9 @@ namespace pp {
 
 		public Block Get(int x, int y) {
 			if (x < 0 || x >= gridWidth)
-				return;
+				return null;
 			if (y < 0 || y >= gridHeight)
-				return;
+				return null;
 
 			return blocks[x, y];
 		}
