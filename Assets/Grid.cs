@@ -49,7 +49,7 @@ namespace pp {
 		}
 
 		public void Update() {
-			if (!Input.GetMouseButton(0)) 
+			if (!Input.GetMouseButtonDown(0)) 
 				return;
 
 			// Find the selected grid tile
