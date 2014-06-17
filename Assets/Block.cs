@@ -45,8 +45,8 @@ namespace pp {
 		/// Called when an item leaves this block.
 		/// </summary>
 		/// <param name="item">The item</param>
-		public virtual void OnExit(Item item) {
-			this.items.Dequeue();
+		public virtual Item OnExit(Item item) {
+			return this.items.Dequeue();
 		}
 	}
 
