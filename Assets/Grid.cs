@@ -14,7 +14,13 @@ namespace pp {
 		private const float tileOffsetY = 0.2f;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
 		private Block lastPlaced;
+		private int BuildCase;
+		public int buildcase
+		{
+			get {return BuildCase;}
+			set { BuildCase = value;}
 
+		}
 		public void Awake() {
 			// Add a single spawner
 			Spawner spawner = new Spawner();
@@ -43,8 +49,14 @@ namespace pp {
 
 			if (Get(x, y) != null)
 				return; // Already something there
-
-			Set(x, y, new Conveyor());
+			switch(BuildCase)
+			{
+			case 1 :
+				Set(x, y, new Conveyor());
+				break;
+			case 2:
+				break;
+			}
 		}
 
 		public void Set(int x, int y, Block block) {
