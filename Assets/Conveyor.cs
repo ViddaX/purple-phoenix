@@ -5,8 +5,9 @@ namespace pp {
 	/// A block which transports items.
 	/// </summary>
 	public class Conveyor : Block {
+		private float pauseStart;
 		public float timeTaken { set; get; }
-		public float entered { set; get; }
+		public float lerpStart { set; get; }
 
 		public Conveyor() : this("conveyor") {
 			timeTaken = 0.5f;
@@ -19,7 +20,7 @@ namespace pp {
 
 		public override void OnEnter(Item item) {
 			base.OnEnter(item);
-			entered = Time.time;
+			lerpStart = Time.time;
 		}
 	}
 }

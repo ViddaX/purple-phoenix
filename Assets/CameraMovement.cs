@@ -2,21 +2,29 @@
 using System;
 
 public class CameraMovement : MonoBehaviour {
-	private const float zoomSpeedMul = 5.0f;
-	private const float maxZoomIn = 0.5f;
-	private const float maxZoomOut = 10.0f;
-	private float startY;
-	private Vector3 offset;
+	public GameObject target;
+	private Vector3 max;
+	private Vector3 min;
+	private Vector3 vel;
+	private float moveSpeed = 0.05f;
+	private float floatiness = 0.85f;
 
 	public void Awake() {
-		startY = transform.position.y;
+		this.max = target.renderer.bounds.max;
+		this.min = target.renderer.bounds.min;
 	}
 
-	public void Update () {
-		float deltaZoom = Input.GetAxis("Mouse ScrollWheel") * zoomSpeedMul;
+	public void FixedUpdate() {
+		vel.x *= floatiness;
 
-		Vector3 pos = transform.position;
-		pos.y = Math.Max(Math.Min(startY + maxZoomOut, transform.position.y - deltaZoom), startY + maxZoomIn);
+		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+			vel.x -= moveSpeed;
+		if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+			vel.x += moveSpeed;
+
+		Vector3 pos = transform.position + vel;
+		pos.x = Math.Max(Math.Min (pos.x, max.x), min.x);
+
 		transform.position = pos;
 	}
 }

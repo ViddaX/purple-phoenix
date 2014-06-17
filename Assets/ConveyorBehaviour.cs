@@ -13,7 +13,7 @@ namespace pp {
 				Vector3 them = p.nextBlock.gameObject.transform.position;
 				them.y = me.y;
 
-				float progress = Math.Min((Time.time - p.entered) / p.timeTaken, 1.0f);
+				float progress = Math.Min((Time.time - p.lerpStart) / p.timeTaken, 1.0f);
 				p.item.gameObject.transform.position = Vector3.Lerp(me, them, progress);
 
 				if (progress >= 1.0f) {
