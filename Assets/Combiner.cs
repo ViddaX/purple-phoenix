@@ -44,7 +44,7 @@ namespace pp {
 			inventory.Clear();
 
 			if (success)
-				items.Enqueue(Spawner.Spawn(recipe.creates));
+				OnEnter(Spawner.Spawn(recipe.creates));
 			//else
 				// TODO Emit smoke
 		}

@@ -19,7 +19,9 @@ namespace pp{
 			if (p.from.items.Count == 0) {
 				return;
 			} else if (LiftItem == null) {
-				LiftItem = p.from.OnExit();
+
+				LiftItem = p.items[0];
+				p.from.OnExit(LiftItem);
 				Liftobject = LiftItem.gameObject;
 				Liftobject.transform.position = p.gameObject.transform.position;
 				_direction = (p.to.worldPosition - p.gameObject.transform.position).normalized;
