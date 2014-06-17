@@ -14,13 +14,8 @@ namespace pp {
 		private const float tileOffsetY = 0.2f;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
 		private Block lastPlaced;
-		private int BuildCase;
-		public int buildcase
-		{
-			get {return BuildCase;}
-			set { BuildCase = value;}
+		public BlockType selected;
 
-		}
 		public void Awake() {
 			// Add a single spawner
 			Spawner spawner = new Spawner();
@@ -49,12 +44,17 @@ namespace pp {
 
 			if (Get(x, y) != null)
 				return; // Already something there
-			switch(BuildCase)
-			{
-			case 1 :
+
+			switch (selected) {
+			case BlockType.CONVEYOR:
 				Set(x, y, new Conveyor());
 				break;
-			case 2:
+			case BlockType.GRABBER:
+				break;
+			case BlockType.COMBINER:
+				// Test code
+				Combiner combiner = new Combiner(new Recipe(ItemType.IRON_SHEET, new RecipePiece(ItemType.IRON_SHEET, 3)));
+				Set(x, y, combiner);
 				break;
 			}
 		}

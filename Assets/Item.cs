@@ -18,19 +18,6 @@ namespace pp {
 		public Item(ItemType type, string prefab) : base(prefab) {
 			this.type = type;
 		}
-		
-		/// <summary>
-		/// Determines whether this item can combine with the specified type.
-		/// </summary>
-		/// <returns><c>true</c> if this item can combine with other; otherwise, <c>false</c>.</returns>
-		/// <param name="type">The other item's type</param>
-		public abstract bool CanCombine(ItemType type);
-
-		/// <summary>
-		/// Combines with the specified item.
-		/// </summary>
-		/// <param name="item">The other item</param>
-		public abstract Item Combine(Item item);
 	}
 
 }

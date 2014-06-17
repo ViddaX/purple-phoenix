@@ -9,7 +9,7 @@ namespace pp {
 		public float timeTaken { set; get; }
 		public float lerpStart { set; get; }
 
-		public Conveyor() : this("conveyor") {
+		public Conveyor() : this(BlockType.CONVEYOR, "conveyor") {
 			timeTaken = 0.5f;
 		}
 

@@ -11,9 +11,10 @@ namespace pp {
 			
 			// Time to spawn an item
 			if (p.nextItem != ItemType.NONE && p.nextBlock != null) {
-				if (p.item != null)
-					p.nextBlock.item = p.item;
-				p.item = p.Spawn(p.nextItem);
+				Item item = Spawner.Spawn(p.nextItem);
+				p.ResetSpawnTimer();
+
+				p.items.Enqueue(item);
 			}
 		}
 	}

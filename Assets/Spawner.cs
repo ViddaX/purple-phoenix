@@ -13,7 +13,7 @@ namespace pp {
 		public bool running { get { return mRunning; } }
 		public ItemType nextItem { set; get; }
 
-		public Spawner() : this("spawner") {
+		public Spawner() : this(BlockType.SPAWNER, "spawner") {
 		}
 
 		public Spawner(string prefab) : base(prefab) {
@@ -29,13 +29,11 @@ namespace pp {
 			mRunning = false;
 		}
 
-		private void ResetSpawnTimer() {
+		public void ResetSpawnTimer() {
 			mNextSpawn = Time.time + spawnDelay;
 		}
 
-		public Item Spawn(ItemType type) {
-			ResetSpawnTimer();
-
+		public static Item Spawn(ItemType type) {
 			switch (type) {
 			case ItemType.IRON_SHEET:
 				return new IronSheet();

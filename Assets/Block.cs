@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace pp {
 
@@ -7,17 +7,21 @@ namespace pp {
 	/// A physical game block.
 	/// </summary>
 	public abstract class Block : Entity {
+		private BlockType mBlockType;
+		public BlockType blockType { get { return mBlockType; } }
 		public float height { set; get; }
 		public Block nextBlock { set; get; }
-		public Item item { set; get; }
+		public Queue<Item> items { set; get; }
 		public Direction direction { set; get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Block"/> class.
 		/// </summary>
 		/// <param name="prefab">The prefab identifier used to create the game object</param>
-		public Block(string prefab) : base(prefab) {
+		public Block(BlockType type, string prefab) : base(prefab) {
+			this.items = new Queue<Item>();
 			this.direction = Direction.NORTH;
+			this.mBlockType = type;
 		}
 
 		/// <summary>
@@ -25,7 +29,7 @@ namespace pp {
 		/// </summary>
 		/// <param name="o">The item</param>
 		public virtual void OnEnter(Item item) {
-			this.item = item;
+			this.items.Enqueue(item);
 		}
 
 		/// <summary>
@@ -33,7 +37,7 @@ namespace pp {
 		/// </summary>
 		/// <param name="item">The item</param>
 		public virtual void OnExit(Item item) {
-			this.item = null;
+			this.items.Dequeue();
 		}
 
 		public void SetPosition(Vector3 pos) {

@@ -4,22 +4,21 @@ namespace pp{
 	public class BuildingMenu : MonoBehaviour {
 		
 		void OnGUI () {
-			
-			// Make a background box
-			GUI.Box(new Rect(10,10,100,90), "Build Menu");
-			
-			// Make the first button. If it is pressed, Application.Loadlevel (1) will be executed
+			GameObject obj = GameObject.Find ("Plane");
+			Grid grid =	obj.GetComponent<Grid>();
+
+			GUI.Box(new Rect(10,10,100,150), "Gadgets");
+
 			if(GUI.Button(new Rect(20,40,80,20), "Conveyor")) {
-				GameObject obj = GameObject.Find ("Plane");
-				Grid grid =	obj.GetComponent<Grid>();
-				grid.buildcase = 1;
+				grid.selected = BlockType.CONVEYOR;
 			}
-			
-			// Make the second button.
-			if(GUI.Button(new Rect(20,70,80,20), "Robotic Arm")) {
-				GameObject obj = GameObject.Find ("Plane");
-				Grid grid =	obj.GetComponent<Grid>();
-				grid.buildcase = 2;
+
+			if(GUI.Button(new Rect(20,70,80,20), "Lifter")) {
+				grid.selected = BlockType.GRABBER;
+			}
+
+			if(GUI.Button(new Rect(20,100,80,20), "Combiner")) {
+				grid.selected = BlockType.COMBINER;
 			}
 		}
 	}
