@@ -10,17 +10,21 @@ namespace pp {
 		private BlockType mBlockType;
 		public BlockType blockType { get { return mBlockType; } }
 		public float height { set; get; }
-		public Block nextBlock { set; get; }
-		public Queue<Item> items { set; get; }
-		public Direction direction { set; get; }
+		public List<Item> items { set; get; }
 		public Vector2 coords { set; get; }
-		public Vector3 worldPosition { 
+		public Grid grid { set; get; }
+		private Direction mDirection;
+		public Direction direction {
 			set {
-				gameObject.transform.position = value;
+				mDirection = value;
+				gameObject.transform.Rotate(new Vector3(0.0f, 1.0f, 0.0f), Util.GetRotationAngle(mDirection));
 			}
 			get {
-				return gameObject.transform.position;
+				return mDirection;
 			}
+		}
+		public override Vector3 size {
+			get { return new Vector3(grid.GetTileWidth(), 0, grid.GetTileWidth()); }
 		}
 
 		/// <summary>
@@ -28,8 +32,7 @@ namespace pp {
 		/// </summary>
 		/// <param name="prefab">The prefab identifier used to create the game object</param>
 		public Block(BlockType type, string prefab) : base(prefab) {
-			this.items = new Queue<Item>();
-			this.direction = Direction.NORTH;
+			this.items = new List<Item>();
 			this.mBlockType = type;
 		}
 
@@ -38,7 +41,7 @@ namespace pp {
 		/// </summary>
 		/// <param name="o">The item</param>
 		public virtual void OnEnter(Item item) {
-			this.items.Enqueue(item);
+			this.items.Add(item);
 		}
 
 		/// <summary>
@@ -46,8 +49,9 @@ namespace pp {
 		/// </summary>
 		/// <param name="item">The item</param>
 		/// <returns>The removed item</returns>
-		public virtual Item OnExit() {
-			return this.items.Dequeue();
+		public virtual Item OnExit(Item item) {
+			this.items.Remove(item);
+			return item;
 		}
 	}
 

@@ -13,21 +13,33 @@ namespace pp {
 		private const int gridWidth = 30;
 		private const int gridHeight = 16;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
-		private Block lastPlaced;
 
 		// Selection parameters
 		private const int MODE_MODIFY = 1; // Add or remove a block
 		private const int MODE_SELECT_TARGET = 2; // Select a block target
 		private int mode = MODE_MODIFY;
 		private Queue<Block> targets = new Queue<Block>(); // List of targets for RobotArm
-		public BlockType spawnType { set; get; } // The block type to spawn
 		public Recipe currentRecipe { set; get; } // Recipe for new combiners
 		public Vector2 mark { set; get; }
+		public Direction direction { set; get; }
+		private BlockType mSpawnType;
+		public BlockType spawnType { 
+			set {
+				mSpawnType = value;
+				mode = MODE_MODIFY;
+			}
+			get {
+				return mSpawnType;
+			}
+		}
 
-		public void Awake() {
+		public Grid() {
 			// FIXME Testing code
 			currentRecipe = new Recipe(ItemType.IRON_SHEET, new RecipePiece(ItemType.IRON_SHEET, 3));
+			direction = Direction.EAST;
+		}
 
+		public void Awake() {
 			// Add a single spawner
 			Spawner spawner = new Spawner();
 			spawner.nextItem = ItemType.IRON_SHEET;
@@ -53,7 +65,7 @@ namespace pp {
 			int x = (int) ((offset.x / GetPlaneWidth()) * gridWidth);
 			int y = (int) ((offset.z / GetPlaneHeight()) * gridHeight);
 
-			if (mode) {
+			if (mode == MODE_MODIFY) {
 				OnModify(x, y);
 			} else {
 				OnSelectTarget(x, y);
@@ -67,13 +79,11 @@ namespace pp {
 
 			block.worldPosition = GridToWorld(x, y);
 			block.coords = new Vector2(x, y);
+			block.grid = this;
 			blocks[x, y] = block;
 
-			// FIXME Testing code
-			if (lastPlaced != null) {
-				lastPlaced.nextBlock = block;
-			}
-			lastPlaced = block;
+			// Calculate direction
+			block.direction = direction;
 		}
 
 		public void Remove(int x, int y) {
@@ -85,7 +95,16 @@ namespace pp {
 		}
 
 		public Block Get(int x, int y) {
+			if (x < 0 || x >= gridWidth)
+				return;
+			if (y < 0 || y >= gridHeight)
+				return;
+
 			return blocks[x, y];
+		}
+
+		public Block Get(Vector2 v) {
+			return Get((int) v.x, (int) v.y);
 		}
 
 		public void OnModify(int x, int y) {
@@ -106,9 +125,9 @@ namespace pp {
 
 			Block selected = Get(x, y);
 			if (selected != null) {
-				targets.Enqueue();
+				targets.Enqueue(selected);
 				if (targets.Count == 2)
-					Set(x, y, new RoboticArm(targets.Dequeue(), targets.Dequeue()));
+					Set((int) mark.x, (int) mark.y, new RoboticArm(targets.Dequeue(), targets.Dequeue()));
 			} else {
 				mode = MODE_MODIFY;
 				targets.Clear();
