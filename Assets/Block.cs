@@ -14,7 +14,7 @@ namespace pp {
 
 		private GameObject obj;
 		public GameObject gameObject { 
-			set { obj = value; this.height = gameObject.collider.bounds.max.y / 2; }
+			set { obj = value; }
 			get { return obj; }
 		}
 

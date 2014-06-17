@@ -10,6 +10,7 @@ namespace pp {
 
 		public Conveyor(Grid grid, Block next) : base(grid, next) {
 			gameObject = (GameObject) Object.Instantiate(grid.conveyorPrefap);
+			height = 0.5f;
 		}
 
 		public override void OnEnter(Item item) {
