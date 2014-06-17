@@ -8,15 +8,24 @@ namespace pp {
 	/// be attached to a plane.
 	/// </summary>
 	public class Grid : MonoBehaviour {
-		public GameObject conveyorPrefap; // LOL xD
-
 		private const int gridLayerMask = 1 << 8; // Grid is on layer 8
 		private const int gridWidth = 30;
 		private const int gridHeight = 16;
+		private const float tileOffsetY = 0.2f;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
+		private Block lastPlaced;
+
+		public void Awake() {
+			// Add a single spawner
+			Spawner spawner = new Spawner();
+			spawner.nextItem = ItemType.IRON_SHEET;
+			Set(4, 4, spawner);
+
+			spawner.Start();
+		}
 
 		public void Update() {
-			if (!Input.GetMouseButtonDown(0)) 
+			if (!Input.GetMouseButton(0)) 
 				return;
 
 			// Find the selected grid tile
@@ -35,22 +44,28 @@ namespace pp {
 			if (Get(x, y) != null)
 				return; // Already something there
 
-			Set(x, y, new Conveyor(this, null));
+			Set(x, y, new Conveyor());
 		}
 
 		public void Set(int x, int y, Block block) {
 			Block existing = Get(x, y);
 			if (existing != null)
-				existing.OnDestroy();
+				existing.Destroy();
 
 			block.SetPosition(GridToWorld(x, y));
 			blocks[x, y] = block;
+
+			// Testing code
+			if (lastPlaced != null) {
+				lastPlaced.nextBlock = block;
+			}
+			lastPlaced = block;
 		}
 
 		public void Remove(int x, int y) {
 			Block b = Get(x, y);
 			if (b != null) {
-				b.OnDestroy();
+				b.Destroy();
 				blocks[x, y] = null;
 			}
 		}
@@ -85,7 +100,7 @@ namespace pp {
 		public Vector3 GridToWorld(int x, int y) {
 			Vector3 world = GetPlaneOrigin();
 			world.x += (x * GetTileWidth()) + (GetTileWidth() / 2);
-			world.y += 0.5f;
+			world.y += tileOffsetY;
 			world.z += (y * GetTileHeight()) + (GetTileHeight() / 2);
 			return world;
 		}

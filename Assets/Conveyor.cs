@@ -5,11 +5,15 @@ namespace pp {
 	/// A block which transports items.
 	/// </summary>
 	public class Conveyor : Block {
-		private float timeTaken = 1000;
-		private float entered;
+		public float timeTaken { set; get; }
+		public float entered { set; get; }
 
-		public Conveyor(Grid grid, Block next) : base(grid, next) {
-			gameObject = (GameObject) Object.Instantiate(grid.conveyorPrefap);
+		public Conveyor() : this("conveyor") {
+			timeTaken = 0.5f;
+		}
+
+		public Conveyor(string prefab) : base(prefab) {
+			gameObject.AddComponent<ConveyorBehaviour>().p = this;
 			height = 0.5f;
 		}
 
@@ -17,19 +21,5 @@ namespace pp {
 			base.OnEnter(item);
 			entered = Time.time;
 		}
-
-		public void FixedUpdate() {
-			// Lerp from here to next block in the chain
-			if (item != null && next != null) {
-				Vector3 me = gameObject.transform.position;
-				me.y += height;
-
-				Vector3 them = next.gameObject.transform.position;
-				them.y += height;
-
-				item.GameObject.transform.position = Vector3.Lerp(me, them, (Time.time - entered / timeTaken));
-			}
-		}
 	}
-
 }

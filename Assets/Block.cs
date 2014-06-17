@@ -6,26 +6,18 @@ namespace pp {
 	/// <summary>
 	/// A physical game block.
 	/// </summary>
-	public abstract class Block {
-		protected Grid grid;
-		protected Block next;
-		protected Item item;
-		protected float height;
-
-		private GameObject obj;
-		public GameObject gameObject { 
-			set { obj = value; }
-			get { return obj; }
-		}
+	public abstract class Block : Entity {
+		public float height { set; get; }
+		public Block nextBlock { set; get; }
+		public Item item { set; get; }
+		public Direction direction { set; get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Block"/> class.
 		/// </summary>
-		/// <param name="next">The next block in the belt</param>
-		/// <param name="o">The block's physical object</param>
-		public Block(Grid grid, Block next) {
-			this.grid = grid;
-			this.next = next;
+		/// <param name="prefab">The prefab identifier used to create the game object</param>
+		public Block(string prefab) : base(prefab) {
+			this.direction = Direction.NORTH;
 		}
 
 		/// <summary>
@@ -42,13 +34,6 @@ namespace pp {
 		/// <param name="item">The item</param>
 		public virtual void OnExit(Item item) {
 			this.item = null;
-		}
-
-		/// <summary>
-		/// Called when this block is removed.
-		/// </summary>
-		public virtual void OnDestroy() {
-			GameObject.Destroy(gameObject);
 		}
 
 		public void SetPosition(Vector3 pos) {
