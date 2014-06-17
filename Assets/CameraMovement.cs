@@ -2,12 +2,13 @@
 using System;
 
 public class CameraMovement : MonoBehaviour {
+	private const float moveSpeed = 0.05f;
+	private const float floatiness = 0.85f;
+	private const float cutoff = 0.02f;
 	public GameObject target;
 	private Vector3 max;
 	private Vector3 min;
 	private Vector3 vel;
-	private float moveSpeed = 0.05f;
-	private float floatiness = 0.85f;
 
 	public void Awake() {
 		this.max = target.renderer.bounds.max;
@@ -15,7 +16,10 @@ public class CameraMovement : MonoBehaviour {
 	}
 
 	public void FixedUpdate() {
+		// Apply velocity
 		vel.x *= floatiness;
+		if (Math.Abs(vel.x) < cutoff)
+			vel.x = 0;
 
 		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
 			vel.x -= moveSpeed;
