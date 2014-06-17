@@ -49,7 +49,7 @@ namespace pp {
 		}
 
 		public void Update() {
-			if (!Input.GetMouseButton(0)) 
+			if (!Input.GetMouseButtonDown(0)) 
 				return;
 
 			// Find the selected grid tile
@@ -96,9 +96,9 @@ namespace pp {
 
 		public Block Get(int x, int y) {
 			if (x < 0 || x >= gridWidth)
-				return;
+				return null;
 			if (y < 0 || y >= gridHeight)
-				return;
+				return null;
 
 			return blocks[x, y];
 		}

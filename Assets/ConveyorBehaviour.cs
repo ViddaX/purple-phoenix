@@ -4,7 +4,7 @@ using System;
 namespace pp {
 
 	public class ConveyorBehaviour : MonoBehaviour {
-		private Item affected;
+		private Item lastAffected;
 		private Vector3 from;
 		private Vector3 to;
 		private int stage;
@@ -15,11 +15,15 @@ namespace pp {
 			if (p.items.Count == 0) 
 				return;
 
-			float progress = Math.Min((Time.time - lerpStart) / p.timeTaken, 1.0f);
-			if (affected == null) { // Lerp to the center
-				affected = p.items[0];
+			Item affected = p.items [0];
+			if (lastAffected != affected) {
+				stage = 0;
 				SetupAnimation(affected.worldPosition, p.worldPosition);
-			} else if (progress >= 1.0f) { // Reached center, go in p.direction
+				lastAffected = affected ;
+			}
+
+			float progress = Math.Min((Time.time - lerpStart) / p.timeTaken, 1.0f);
+			if (progress >= 1.0f) { // Reached center, go in p.direction
 				Vector3 dir3 = GetDirectionVector(p.direction);
 				if (stage == 1) {
 					dir3.Scale(new Vector3(p.size.x / 2, 0, p.size.x / 2));

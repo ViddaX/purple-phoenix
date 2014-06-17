@@ -1,34 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
-namespace pp{
-	public class RoboticArmBehaviour : MonoBehaviour {
-			private GameObject Liftobject;
-			private Item  LiftItem;
-			private float RotationSpeed =10 ;
-			private Transform Target;
-			private Quaternion LookRot;
-			private Vector3 _direction;
-			public RoboticArm p { get; set;}
-		// Use this for initialization
-		void Start () {
-		
-		}
-		
+
+namespace pp
+{
+	public class RoboticArmBehaviour : MonoBehaviour
+	{
+		private Item item;
+		private float rotSpeed = 3.0f;
+
+		public RoboticArm p { get; set; }
+
 		// Update is called once per frame
-		void Update () {
-			if (p.from.items.Count == 0) {
-				return;
-			} else if (LiftItem == null) {
+		void Update ()
+		{
+			Vector3 target;
+			if (item != null)
+				target = p.to.worldPosition;
+			else
+				target = p.from.worldPosition;
 
-				LiftItem = p.items[0];
-				p.from.OnExit(LiftItem);
-				Liftobject = LiftItem.gameObject;
-				Liftobject.transform.position = p.gameObject.transform.position;
-				_direction = (p.to.worldPosition - p.gameObject.transform.position).normalized;
-				LookRot=Quaternion.LookRotation(_direction);
+			Vector3 to = target - p.worldPosition;
+			
+			float dot = Vector3.Dot(p.gameObject.transform.right, to.normalized);
+			if (dot > 0.99) {
+				if (item == null) {
+					if (p.from.items.Count == 0)
+						return;
 
-				p.gameObject.transform.rotation = Quaternion.Slerp(p.gameObject.transform.rotation, LookRot, Time.deltaTime * RotationSpeed);
-				p.to.OnEnter(LiftItem);
+					item = p.from.items [0];
+					p.from.OnExit (item);
+					item.worldPosition = p.worldPosition;
+				} else {
+					p.to.OnEnter (item);
+					item = null;
+				}
+			} else {
+				p.gameObject.transform.Rotate (Vector3.up, rotSpeed);
 			}
 		}
 	}
