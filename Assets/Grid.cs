@@ -14,7 +14,10 @@ namespace pp {
 		private const float tileOffsetY = 0.2f;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
 		private Block lastPlaced;
-		public BlockType selected;
+
+		// Selection parameters
+		public BlockType selected { set; get; } // The block type to spawn
+		public Block[] targets; // Certain blocks need to interact with a target (i.e. robot arm)
 
 		public void Awake() {
 			// Add a single spawner
@@ -45,19 +48,9 @@ namespace pp {
 			if (Get(x, y) != null)
 				return; // Already something there
 
-			switch (selected) {
-			case BlockType.CONVEYOR:
-				Set(x, y, new Conveyor());
-				break;
-			case BlockType.GRABBER:
-				Set (x, y , new RoboticArm(null,null));
-				break;
-			case BlockType.COMBINER:
-				// Test code
-				Combiner combiner = new Combiner(new Recipe(ItemType.IRON_SHEET, new RecipePiece(ItemType.IRON_SHEET, 3)));
-				Set(x, y, combiner);
-				break;
-			}
+			Block created = CreateBlock(selected);
+			if (created != null)
+				Set(x, y, created);
 		}
 
 		public void Set(int x, int y, Block block) {
@@ -65,10 +58,11 @@ namespace pp {
 			if (existing != null)
 				existing.Destroy();
 
-			block.SetPosition(GridToWorld(x, y));
+			block.worldPosition = GridToWorld(x, y);
+			block.coords = new Vector2(x, y);
 			blocks[x, y] = block;
 
-			// Testing code
+			// FIXME Testing code
 			if (lastPlaced != null) {
 				lastPlaced.nextBlock = block;
 			}
@@ -85,6 +79,19 @@ namespace pp {
 
 		public Block Get(int x, int y) {
 			return blocks[x, y];
+		}
+
+		public Block CreateBlock(BlockType type) {
+			switch (type) {
+				case BlockType.CONVEYOR:
+					return new Conveyor();
+				case BlockType.GRABBER:
+					return new RoboticArm(null, null); // TODO Find targets
+				case BlockType.COMBINER:
+					return new Combiner(currentRecipe);
+				default:
+					return null;
+			}
 		}
 
 		public Vector3 GetPlaneOrigin() {

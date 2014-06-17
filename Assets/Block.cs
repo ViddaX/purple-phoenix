@@ -13,6 +13,15 @@ namespace pp {
 		public Block nextBlock { set; get; }
 		public Queue<Item> items { set; get; }
 		public Direction direction { set; get; }
+		public Vector2 coords { set; get; }
+		public Vector3 worldPosition { 
+			set {
+				gameObject.transform.position = value;
+			}
+			get {
+				return gameObject.transform.position;
+			}
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Block"/> class.
@@ -38,10 +47,6 @@ namespace pp {
 		/// <param name="item">The item</param>
 		public virtual void OnExit(Item item) {
 			this.items.Dequeue();
-		}
-
-		public void SetPosition(Vector3 pos) {
-			gameObject.transform.position = pos;
 		}
 	}
 
