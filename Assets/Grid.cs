@@ -50,35 +50,31 @@ namespace pp {
 
 		public void Update() {
 			if (GUIUtility.hotControl == 0) {
-								if (!Input.GetMouseButtonDown (0)) 
-										return;
+				if (!Input.GetMouseButtonDown (0)) 
+					return;
 
-								// Find the selected grid tile
-								Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-								RaycastHit hit;
-								bool success = Physics.Raycast (ray, out hit, 1000.0f, gridLayerMask);
+				// Find the selected grid tile
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				RaycastHit hit;
+				bool success = Physics.Raycast (ray, out hit, 1000.0f, gridLayerMask);
 
-								if (!success) 
-										return;
+				if (!success) 
+					return;
 
-								Vector3 offset = hit.point - GetPlaneOrigin (); // Offset from bottom left
+				Vector3 offset = hit.point - GetPlaneOrigin (); // Offset from bottom left
 
-								int x = (int)((offset.x / GetPlaneWidth ()) * gridWidth);
-								int y = (int)((offset.z / GetPlaneHeight ()) * gridHeight);
+				int x = (int)((offset.x / GetPlaneWidth ()) * gridWidth);
+				int y = (int)((offset.z / GetPlaneHeight ()) * gridHeight);
 
-								if (mode == MODE_MODIFY) {
-										OnModify (x, y);
-								} else {
-										OnSelectTarget (x, y);
-								}
-						}
+				if (mode == MODE_MODIFY) {
+					OnModify (x, y);
+				} else {
+					OnSelectTarget (x, y);
+				}
+			}
 		}
 
 		public void Set(int x, int y, Block block) {
-			Block existing = Get(x, y);
-			if (existing != null)
-				existing.Destroy();
-
 			block.worldPosition = GridToWorld(x, y);
 			block.coords = new Vector2(x, y);
 			block.grid = this;
@@ -116,6 +112,12 @@ namespace pp {
 				return;
 			}
 
+			Block existing = Get(x, y);
+			if (existing != null) {
+				Alerts.ShowMessage("Cannot place - something is blocking the way!");
+				return;
+			}
+
 			Block created = CreateBasicBlock(spawnType);
 			if (created != null)
 				Set(x, y, created);
@@ -127,13 +129,18 @@ namespace pp {
 
 			Block selected = Get(x, y);
 			if (selected != null) {
+				if (targets.Contains(selected)) {
+					Alerts.ShowMessage("You cannot select the same block twice.");
+					return;
+				}
+
 				targets.Enqueue(selected);
 				if (targets.Count == 2)
 					Set((int) mark.x, (int) mark.y, new RoboticArm(targets.Dequeue(), targets.Dequeue()));
-			} else {
+
 				mode = MODE_MODIFY;
-				targets.Clear();
-				// TODO 'No block selected' Error message
+			} else {
+				Alerts.ShowMessage("You cannot grab from that block; please select a conveyor.");
 			}
 		}
 

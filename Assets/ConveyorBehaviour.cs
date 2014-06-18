@@ -43,7 +43,7 @@ namespace pp {
 					stage = 0;
 				}
 			} else {
-				if (affected != null)
+				if (affected != null && progress > 0.0f)
 					affected.worldPosition = Vector3.Lerp(from, to, progress);
 			}
 		}

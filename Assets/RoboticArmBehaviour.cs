@@ -30,7 +30,8 @@ namespace pp
 					item = p.from.items [0];
 					p.from.OnExit (item);
 					item.worldPosition = p.worldPosition;
-					Vector3 h = new Vector3(0.4f,0,0);
+					Vector3 h = new Vector3(0.9f,0,0);
+					h.Scale(to.normalized);
 					item.worldPosition+=h;
 					item.gameObject.transform.parent= p.gameObject.transform;
 				} else {

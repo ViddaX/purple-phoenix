@@ -1,49 +1,65 @@
 ﻿using UnityEngine;
-using System.Collections;
-namespace pp{
-public class Alerts : MonoBehaviour {
-		private static string messege { get; set;}
-		private static float WaitTime { get; set;}
-		private static bool ActiveMessege= true;
-		public GUIStyle style;
-	
-		public static void SetAlertMessege(string m)
-		{
-			ActiveMessege = true;
-			messege = m;
-			WaitTime = 3.0f;
+using System.Collections.Generic;
+
+namespace pp {
+	public class Alerts : MonoBehaviour {
+		public static float DEFAULT_DURATION = 2.0f;
+		private static Queue<AlertMessage> messages = new Queue<AlertMessage>();
+		private static AlertMessage cur;
+		private static float messageEnd;
+
+		public static void ShowMessage(AlertMessage message) {
+			if (!message.repeatable && messages.Contains(message))
+				return;
+
+			messages.Enqueue(message);
 		}
-		public static  void SetAlertMessege(string m, float Time)
-		{
-			ActiveMessege = true;
-			messege = m;
-			WaitTime = Time;
+
+		public static void ShowMessage(string message, float duration, bool repeatable) {
+			ShowMessage(new AlertMessage(message, duration, repeatable));
 		}
-		void Start()
-		{
-		// Josh is a huge fagget and needs to stop sucking over 9000 dicks per min. 
 
+		public static void ShowMessage(string message) {
+			ShowMessage(message, DEFAULT_DURATION, false);
 		}
-	void Update()
-		{
-			OnGUI ();
-		}
-	void OnGUI()
-	{
-			StartCoroutine(DisapearBoxAfter(WaitTime)); 
 
+		public void OnGUI() {
+			if (cur == null) {
+				if (messages.Count > 0) {
+					cur = messages.Dequeue();
+					messageEnd = Time.time + cur.duration;
+				}
+			} else {
+				float w = 300;
+				float h = 150;
+				GUI.Label(new Rect((Screen.width / 2) - (w / 2), (Screen.height / 2) - (h / 2), w, h), cur.message);
 
-		if (ActiveMessege) 
-		{
-
-
-				GUI.Label(new Rect(400,300,200,200), messege,style);
+				if (Time.time > messageEnd)
+					cur = null;
+			}
 		}
 	}
 
-		IEnumerator DisapearBoxAfter(float waitTime) { 
-			yield return new WaitForSeconds(waitTime);
-			ActiveMessege = false;
+	public class AlertMessage {
+		public string message;
+		public float duration;
+		public bool repeatable;
+
+		public AlertMessage(string message, float duration, bool repeatable) {
+			this.message = message;
+			this.duration = duration;
+			this.repeatable = repeatable;
+		}
+
+		public override bool Equals (object obj)
+		{
+			if (!(obj is AlertMessage)) return false;
+			return this.message == ((AlertMessage) obj).message;
+		}
+
+		public override int GetHashCode ()
+		{
+			return this.message.GetHashCode();
 		}
 	}
 }
