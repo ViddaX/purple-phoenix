@@ -19,7 +19,6 @@ namespace pp
 			else
 				target = p.from.worldPosition;
 
-			p.gameObject.transform.Rotate (Vector3.up, rotSpeed);
 			Vector3 to = target - p.worldPosition;
 			
 			float dot = Vector3.Dot(p.gameObject.transform.right, to.normalized);
@@ -40,8 +39,8 @@ namespace pp
 					item = null;
 				}
 			} else {
-
-				}
+				p.gameObject.transform.Rotate (Vector3.up, rotSpeed);
+			}
 		}
 	}
 }
