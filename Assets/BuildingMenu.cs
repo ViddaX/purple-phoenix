@@ -11,14 +11,17 @@ namespace pp{
 
 			if(GUI.Button(new Rect(20,40,80,20), "Conveyor")) {
 				grid.spawnType = BlockType.CONVEYOR;
+				Selectrecipe.BuildComb = false;
 			}
 
 			if(GUI.Button(new Rect(20,70,80,20), "Lifter")) {
 				grid.spawnType = BlockType.GRABBER;
+				Selectrecipe.BuildComb = false;
 			}
 
 			if(GUI.Button(new Rect(20,100,80,20), "Combiner")) {
 				grid.spawnType = BlockType.COMBINER;
+				Selectrecipe.BuildComb = true;
 			}
 		}
 	}

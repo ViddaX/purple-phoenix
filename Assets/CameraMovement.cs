@@ -43,7 +43,8 @@ public class CameraMovement : MonoBehaviour {
 		}
 		Vector3 pos = transform.position + vel;
 		pos.x = Math.Max(Math.Min (pos.x, max.x), min.x);
-		pos.z = Math.Max(Math.Min (pos.z, max.z), min.z);
+		pos.z = Math.Max(Math.Min (pos.z, max.z-10), min.z-7);
 		transform.position = pos;
+
 	}
 }
