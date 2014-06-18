@@ -19,6 +19,7 @@ namespace pp
 			else
 				target = p.from.worldPosition;
 
+			p.gameObject.transform.Rotate (Vector3.up, rotSpeed);
 			Vector3 to = target - p.worldPosition;
 			
 			float dot = Vector3.Dot(p.gameObject.transform.right, to.normalized);
@@ -30,13 +31,17 @@ namespace pp
 					item = p.from.items [0];
 					p.from.OnExit (item);
 					item.worldPosition = p.worldPosition;
+					Vector3 h = new Vector3(0.4f,0,0);
+					item.worldPosition+=h;
+					item.gameObject.transform.parent= p.gameObject.transform;
 				} else {
+					item.gameObject.transform.parent = null;
 					p.to.OnEnter (item);
 					item = null;
 				}
 			} else {
-				p.gameObject.transform.Rotate (Vector3.up, rotSpeed);
-			}
+
+				}
 		}
 	}
 }
