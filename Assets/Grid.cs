@@ -13,7 +13,8 @@ namespace pp {
 		private const int gridWidth = 30;
 		private const int gridHeight = 16;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
-
+		public ItemType Recipe;
+		public float Money = 1000;
 		// Selection parameters
 		private const int MODE_MODIFY = 1; // Add or remove a block
 		private const int MODE_SELECT_TARGET = 2; // Select a block target
