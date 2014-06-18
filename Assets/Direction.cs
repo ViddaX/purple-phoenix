@@ -7,10 +7,10 @@ namespace pp {
 	/// Compass directions.
 	/// </summary>
 	public enum Direction {
-		NORTH,
-		SOUTH,
-		EAST,
-		WEST
+		NORTH = 0,
+		EAST = 1,
+		SOUTH = 2,
+		WEST = 3
 	}
 
 }

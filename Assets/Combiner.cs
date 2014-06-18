@@ -8,7 +8,7 @@ namespace pp {
 		private List<Item> inventory = new List<Item>();
 		public Recipe recipe { set; get; }
 
-		public Combiner(Recipe recipe) : base(BlockType.COMBINER, "spawner") {
+		public Combiner(Recipe recipe) : base(BlockType.COMBINER) {
 			this.recipe = recipe;
 		}
 

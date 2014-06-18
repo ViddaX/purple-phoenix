@@ -11,13 +11,17 @@ namespace pp {
 		public BlockType blockType { get { return mBlockType; } }
 		public float height { set; get; }
 		public List<Item> items { set; get; }
-		public Vector2 coords { set; get; }
+		public Vector2i coords { set; get; }
 		public Grid grid { set; get; }
+		private float rotation;
 		private Direction mDirection;
 		public Direction direction {
 			set {
 				mDirection = value;
-				gameObject.transform.Rotate(new Vector3(0.0f, 1.0f, 0.0f), Util.GetRotationAngle(mDirection));
+
+				float newRot = Util.GetRotationAngle(mDirection);
+				gameObject.transform.Rotate(Vector3.up, newRot - rotation);
+				rotation = newRot;
 			}
 			get {
 				return mDirection;
@@ -31,9 +35,13 @@ namespace pp {
 		/// Initializes a new instance of the <see cref="Block"/> class.
 		/// </summary>
 		/// <param name="prefab">The prefab identifier used to create the game object</param>
-		public Block(BlockType type, string prefab) : base(prefab) {
+		public Block(BlockType type) : base(Util.GetPrefabName(type)) {
 			this.items = new List<Item>();
 			this.mBlockType = type;
+
+			gameObject.AddComponent<Rigidbody>();
+			gameObject.AddComponent<BoxCollider>();
+			gameObject.rigidbody.isKinematic = true;
 		}
 
 		/// <summary>
@@ -58,6 +66,22 @@ namespace pp {
 				i.Destroy();
 
 			base.Destroy();
+		}
+
+		public bool Empty() {
+			return items.Count == 0;
+		}
+
+		public void Rotate(bool clockwise) {
+			int dir = clockwise ? -1 : 1;
+			int newDir = (int) direction + dir;
+
+			if (newDir < 0)
+				newDir = 3;
+			if (newDir > 3)
+				newDir = 0;
+
+			direction = (Direction) newDir;
 		}
 	}
 

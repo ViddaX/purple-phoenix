@@ -13,10 +13,10 @@ namespace pp {
 		public bool running { get { return mRunning; } }
 		public ItemType nextItem { set; get; }
 
-		public Spawner() : this(BlockType.SPAWNER, "spawner") {
+		public Spawner() : this(BlockType.SPAWNER) {
 		}
 
-		public Spawner(BlockType type,string prefab) : base(type,prefab) {
+		public Spawner(BlockType type) : base(type) {
 			gameObject.AddComponent<SpawnerBehaviour>().p = this;
 		}
 

@@ -29,12 +29,11 @@ namespace pp {
 					dir3.Scale(new Vector3(p.size.x / 2, 0, p.size.x / 2));
 					SetupAnimation(p.worldPosition, p.worldPosition + dir3);
 				} else {
-					Block next = p.grid.Get(p.coords + new Vector2(dir3.x, dir3.z));
+					Block next = p.grid.Get((int) dir3.x + p.coords.x, (int) dir3.z + p.coords.y);
 					if (next != null) {
 						next.OnEnter(affected); // Pass along the item
 					} else {
-						affected.Destroy();
-						// TODO Fall off conveyor belt
+						affected.Fall(p.gameObject.transform.forward);
 					}
 					p.OnExit(affected);
 
@@ -55,8 +54,8 @@ namespace pp {
 			this.to = to;
 
 			// Constrain Y axis
-			from.y = p.worldPosition.y;
-			to.y = p.worldPosition.y;
+			this.from.y = p.worldPosition.y + 0.35f;
+			this.to.y = this.from.y;
 		}
 
 		private Vector3 GetDirectionVector(Direction dir) {
@@ -70,6 +69,7 @@ namespace pp {
 			case Direction.WEST:
 				return new Vector3(0.0f, 0.0f, 1.0f);
 			default:
+				Debug.Log (dir);
 				throw new NotImplementedException();
 			}
 		}

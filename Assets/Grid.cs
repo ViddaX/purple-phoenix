@@ -18,26 +18,31 @@ namespace pp {
 		// Selection parameters
 		private const int MODE_MODIFY = 1; // Add or remove a block
 		private const int MODE_SELECT_TARGET = 2; // Select a block target
+
 		private int mode = MODE_MODIFY;
 		private Queue<Block> targets = new Queue<Block>(); // List of targets for RobotArm
-		public Recipe currentRecipe { set; get; } // Recipe for new combiners
-		public Vector2 mark { set; get; }
+		public ItemType recipe { set; get; } // Recipe for new combiners
 		public Direction direction { set; get; }
 		private BlockType mSpawnType;
 		public BlockType spawnType { 
 			set {
 				mSpawnType = value;
 				mode = MODE_MODIFY;
+				useMark = false;
 			}
 			get {
 				return mSpawnType;
 			}
 		}
 
+		// Ghost parameters
+		private Marker marker;
+		private bool useMark;
+		public Vector2i mark { set; get; }
+
 		public Grid() {
-			// FIXME Testing code
-			currentRecipe = new Recipe(ItemType.IRON_SHEET, new RecipePiece(ItemType.IRON_SHEET, 3));
 			direction = Direction.EAST;
+			spawnType = BlockType.CONVEYOR;
 		}
 
 		public void Awake() {
@@ -45,52 +50,63 @@ namespace pp {
 			Spawner spawner = new Spawner();
 			spawner.nextItem = ItemType.IRON_SHEET;
 			Set(4, 10, spawner);
-
 			spawner.Start();
+
+			marker = new Marker();
 		}
 
 		public void Update() {
-			if (GUIUtility.hotControl == 0) {
-				if (!Input.GetMouseButtonDown (0)) 
-					return;
+			// Find the hovered grid tile
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			RaycastHit hit;
+			bool success = Physics.Raycast (ray, out hit, 1000.0f, gridLayerMask);
+			
+			if (success) {
+				Vector2i hitGrid = WorldToGrid(hit.point);
 
-				// Find the selected grid tile
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-				RaycastHit hit;
-				bool success = Physics.Raycast (ray, out hit, 1000.0f, gridLayerMask);
-
-				if (!success) 
-					return;
-
-				Vector3 offset = hit.point - GetPlaneOrigin (); // Offset from bottom left
-
-				int x = (int)((offset.x / GetPlaneWidth ()) * gridWidth);
-				int y = (int)((offset.z / GetPlaneHeight ()) * gridHeight);
-
-				if (mode == MODE_MODIFY) {
-					OnModify (x, y);
+				// Move mark
+				if (useMark) {
+					marker.worldPosition = GridToWorld(mark);
 				} else {
-					OnSelectTarget (x, y);
+					marker.worldPosition = Vector3.zero;
+				}
+
+				if (GUIUtility.hotControl == 0 && Input.GetMouseButtonDown (0)) {
+					if (mode == MODE_MODIFY) {
+						OnModify(hitGrid);
+					} else {
+						OnSelectTarget(hitGrid);
+					}
 				}
 			}
 		}
 
+		public void Set(Vector2i pos, Block block) {
+			Set(pos.x, pos.y, block);
+		}
+
 		public void Set(int x, int y, Block block) {
 			block.worldPosition = GridToWorld(x, y);
-			block.coords = new Vector2(x, y);
+			block.coords = new Vector2i(x, y);
 			block.grid = this;
 			blocks[x, y] = block;
-
+			
 			// Calculate direction
 			block.direction = direction;
 		}
 
-		public void Remove(int x, int y) {
+		public bool Remove(int x, int y) {
 			Block b = Get(x, y);
 			if (b != null) {
 				b.Destroy();
 				blocks[x, y] = null;
+				return true;
 			}
+			return false;
+		}
+
+		public bool Remove(Vector2i pos) {
+			return Remove(pos.x, pos.y);
 		}
 
 		public Block Get(int x, int y) {
@@ -98,50 +114,60 @@ namespace pp {
 				return null;
 			if (y < 0 || y >= gridHeight)
 				return null;
-
+			
 			return blocks[x, y];
 		}
 
-		public Block Get(Vector2 v) {
-			return Get((int) v.x, (int) v.y);
+		public Block Get(Vector2i pos) {
+			return Get(pos.x, pos.y);
 		}
 
-		public void OnModify(int x, int y) {
-			if (spawnType == BlockType.GRABBER) {
+		public void OnModify(Vector2i pos) {
+			Block existing = Get(pos.x, pos.y);
+			if (existing == null && spawnType == BlockType.GRABBER) {
 				mode = MODE_SELECT_TARGET;
-				mark = new Vector2(x, y);
+				useMark = true;
+				mark = pos;
 				return;
 			}
 
-			Block existing = Get(x, y);
 			if (existing != null) {
+				// Rotate the block?
+				if (existing.blockType == spawnType) {
+					existing.Rotate(true);
+					return;
+				}
+
 				Alerts.ShowMessage("Cannot place - something is blocking the way!");
 				return;
 			}
 
 			Block created = CreateBasicBlock(spawnType);
 			if (created != null)
-				Set(x, y, created);
+				Set(pos.x, pos.y, created);
 		}
 
-		public void OnSelectTarget(int x, int y) {
+		public void OnSelectTarget(Vector2i pos) {
 			if (spawnType != BlockType.GRABBER)
 				throw new ArgumentException();
 
-			Block selected = Get(x, y);
+			Block selected = Get(pos.x, pos.y);
 			if (selected != null) {
 				if (targets.Contains(selected)) {
 					Alerts.ShowMessage("You cannot select the same block twice.");
-					return;
+				} else if (selected.blockType != BlockType.CONVEYOR) {
+					Alerts.ShowMessage("You can only pick up objects from a conveyor belt.");
+				} else {
+					// Add a block target
+					targets.Enqueue(selected);
+					if (targets.Count == 2) {
+						Set((int) mark.x, (int) mark.y, new RoboticArm(targets.Dequeue(), targets.Dequeue()));
+						mode = MODE_MODIFY;
+						useMark = false;
+					}
 				}
-
-				targets.Enqueue(selected);
-				if (targets.Count == 2)
-					Set((int) mark.x, (int) mark.y, new RoboticArm(targets.Dequeue(), targets.Dequeue()));
-
-				mode = MODE_MODIFY;
 			} else {
-				Alerts.ShowMessage("You cannot grab from that block; please select a conveyor.");
+				Alerts.ShowMessage("Select a conveyor to pick up from.");
 			}
 		}
 
@@ -150,7 +176,7 @@ namespace pp {
 				case BlockType.CONVEYOR:
 					return new Conveyor();
 				case BlockType.COMBINER:
-					return new Combiner(currentRecipe);
+					// return new Combiner(RecipeFactory.NewRecipe(recipe));
 				default:
 					return null;
 			}
@@ -179,12 +205,25 @@ namespace pp {
 			return GetPlaneWidth() / gridWidth;
 		}
 
+		public Vector3 GridToWorld(Vector2i pos) {
+			return GridToWorld(pos.x, pos.y);
+		}
+
 		public Vector3 GridToWorld(int x, int y) {
 			Vector3 world = GetPlaneOrigin();
-			world.x += (x * GetTileWidth()) + (GetTileWidth() / 2);
+			world.x += ((float) x * GetTileWidth()) + (GetTileWidth() / 2.0f);
 			world.y += 0.2f;
-			world.z += (y * GetTileHeight()) + (GetTileHeight() / 2);
+			world.z += ((float) y * GetTileHeight()) + (GetTileHeight() / 2.0f);
 			return world;
+		}
+
+		public Vector2i WorldToGrid(Vector3 world) {
+			Vector3 offset = world - GetPlaneOrigin (); // Offset from bottom left
+			
+			int x = (int)((offset.x / GetPlaneWidth ()) * gridWidth);
+			int y = (int)((offset.z / GetPlaneHeight ()) * gridHeight);
+			
+			return new Vector2i(x, y);
 		}
 	}
 

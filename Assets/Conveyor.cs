@@ -7,11 +7,11 @@ namespace pp {
 	public class Conveyor : Block {
 		public float timeTaken { set; get; }
 
-		public Conveyor() : this(BlockType.CONVEYOR, "conveyor") {
+		public Conveyor() : this(BlockType.CONVEYOR) {
 			timeTaken = 0.25f;
 		}
 
-		public Conveyor(BlockType type, string prefab) : base(type, prefab) {
+		public Conveyor(BlockType type) : base(type) {
 			gameObject.AddComponent<ConveyorBehaviour>().p = this;
 			height = 0.5f;
 		}
