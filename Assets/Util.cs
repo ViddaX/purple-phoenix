@@ -18,6 +18,10 @@ namespace pp {
 				throw new NotImplementedException();
 			}
 		}
+
+		public static float Clamp(float f, float min, float max) {
+			return Math.Min(Math.Max (f, min), max);
+		}
 	}
 
 }

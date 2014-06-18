@@ -1,49 +1,54 @@
 ﻿using UnityEngine;
 using System;
 
-public class CameraMovement : MonoBehaviour {
-	private const float moveSpeed = 0.25f;
-	private const float floatiness = 0.85f;
-	private const float cutoff = 0.02f;
-	public GameObject target;
-	private Vector3 max;
-	private Vector3 min;
-	private Vector3 vel;
+namespace pp {
 
-	public void Awake() {
-		this.max = target.renderer.bounds.max;
-		this.min = target.renderer.bounds.min;
+	public class CameraMovement : MonoBehaviour {
+		private const float moveSpeed = 0.05f;
+		private const float floatiness = 0.85f;
+		private const float cutoff = 0.02f;
+		private const float maxZoomIn = 5.0f;
+		private const float maxZoomOut = 1.5f;
+		private float startY;
+		public GameObject target;
+		private Vector3 max;
+		private Vector3 min;
+		private Vector3 vel;
+
+		public void Awake() {
+			this.startY = transform.position.y;
+			this.max = target.renderer.bounds.max;
+			this.min = target.renderer.bounds.min;
+		}
+
+		public void FixedUpdate() {
+			// Apply velocity
+			vel *= floatiness;
+			if (vel.sqrMagnitude < cutoff * cutoff)
+				vel = Vector3.zero;
+
+			if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+				vel.x -= moveSpeed;
+			if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+				vel.x += moveSpeed;
+			if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+				vel.z += moveSpeed;
+			if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+				vel.z -= moveSpeed;
+			if (Input.GetAxis("Mouse ScrollWheel") < 0) // back
+				vel.y += moveSpeed * 4;
+			if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
+				vel.y -= moveSpeed * 4;
+
+			// Constrain movement
+			float rangeZ = max.z - min.z;
+			Vector3 pos = transform.position + vel;
+			pos.x = Util.Clamp(pos.x, min.x, max.x);
+			pos.y = Util.Clamp(pos.y, startY - maxZoomIn, startY + maxZoomOut);
+			pos.z = Util.Clamp(pos.z, min.z - (rangeZ / 2), max.z - rangeZ);
+
+			transform.position = pos;
+		}
 	}
 
-	public void FixedUpdate() {
-		// Apply velocity
-		vel.x *= floatiness;
-		vel.y *= floatiness*20;
-		vel.z *= floatiness;
-		if (Math.Abs(vel.x) < cutoff || Math.Abs (vel.y) < cutoff )
-			vel.x = 0;
-			vel.y = 0;
-			vel.z = 0;
-		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-			vel.x -= moveSpeed;
-		if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-			vel.x += moveSpeed;
-		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-			vel.z += moveSpeed;
-		if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-			vel.z -= moveSpeed;
-		if (Input.GetAxis("Mouse ScrollWheel") < 0) // back
-		{
-			vel.y+= moveSpeed*4;
-			
-		}
-		if (Input.GetAxis("Mouse ScrollWheel") > 0) // forward
-		{
-			vel.y-= moveSpeed*4;
-		}
-		Vector3 pos = transform.position + vel;
-		pos.x = Math.Max(Math.Min (pos.x, max.x), min.x);
-		pos.z = Math.Max(Math.Min (pos.z, max.z), min.z);
-		transform.position = pos;
-	}
 }
