@@ -33,6 +33,7 @@ namespace pp {
 					if (next != null) {
 						next.OnEnter(affected); // Pass along the item
 					} else {
+						affected.Destroy();
 						// TODO Fall off conveyor belt
 					}
 					p.OnExit(affected);
