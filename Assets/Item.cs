@@ -6,7 +6,7 @@ namespace pp {
 	/// An object which can appear on a conveyor belt.
 	/// </summary>
 	public abstract class Item : Entity {
-		private const float fallFadeDelay = 4.0f;
+		private const float fallFadeDelay = 2.0f;
 		private System.Random rng = new System.Random();
 		protected ItemType type;
 		public ItemType itemType { get { return type; } }
@@ -32,6 +32,10 @@ namespace pp {
 			                          0.0f,
 			                          200.0f + (50.0f * (float) rng.NextDouble())));
 			towards.y = 180.0f;
+
+			Color color = gameObject.renderer.material.color;
+			color.a = 0.25f;
+			gameObject.renderer.material.color = color;
 			gameObject.rigidbody.AddForce(towards, ForceMode.Acceleration);
 
 			GameObject.Destroy(gameObject, fallFadeDelay);

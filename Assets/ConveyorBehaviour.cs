@@ -4,6 +4,7 @@ using System;
 namespace pp {
 
 	public class ConveyorBehaviour : MonoBehaviour {
+		private const int maxItems = 2;
 		private Item lastAffected;
 		private Vector3 from;
 		private Vector3 to;
@@ -12,8 +13,13 @@ namespace pp {
 		public Conveyor p { set; get; }
 		
 		public void FixedUpdate() {
-			if (p.items.Count == 0) 
+			int count = p.items.Count;
+			if (count >= maxItems + 1) { // throw something off if we get too full
+				p.items[maxItems].Fall(p.gameObject.transform.forward);
+				p.items.RemoveAt(maxItems);
+			} else if (count == 0) {
 				return;
+			}
 
 			Item affected = p.items [0];
 			if (lastAffected != affected) {
