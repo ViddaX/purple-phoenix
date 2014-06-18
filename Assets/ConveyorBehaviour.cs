@@ -36,7 +36,7 @@ namespace pp {
 					SetupAnimation(p.worldPosition, p.worldPosition + dir3);
 				} else {
 					Block next = p.grid.Get((int) dir3.x + p.coords.x, (int) dir3.z + p.coords.y);
-					if (next.blockType == BlockType.CONVEYOR && next != null) {
+					if (next != null && next.blockType == BlockType.CONVEYOR) {
 						next.OnEnter(affected); // Pass along the item
 					} else {
 						affected.Fall(p.gameObject.transform.forward);
