@@ -52,6 +52,13 @@ namespace pp {
 			this.items.Remove(item);
 			return item;
 		}
+
+		public override void Destroy () {
+			foreach (Item i in items)
+				i.Destroy();
+
+			base.Destroy();
+		}
 	}
 
 }

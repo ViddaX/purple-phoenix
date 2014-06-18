@@ -8,7 +8,7 @@ namespace pp {
 		public float timeTaken { set; get; }
 
 		public Conveyor() : this(BlockType.CONVEYOR, "conveyor") {
-			timeTaken = 0.5f;
+			timeTaken = 0.25f;
 		}
 
 		public Conveyor(BlockType type, string prefab) : base(type, prefab) {

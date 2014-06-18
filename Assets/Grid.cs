@@ -43,7 +43,7 @@ namespace pp {
 			// Add a single spawner
 			Spawner spawner = new Spawner();
 			spawner.nextItem = ItemType.IRON_SHEET;
-			Set(4, 4, spawner);
+			Set(4, 10, spawner);
 
 			spawner.Start();
 		}

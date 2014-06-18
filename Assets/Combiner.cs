@@ -43,10 +43,11 @@ namespace pp {
 
 			inventory.Clear();
 
-			if (success)
-				OnEnter(Spawner.Spawn(recipe.creates));
-			//else
-				// TODO Emit smoke
+			if (success) {
+				Item created = Spawner.Spawn(recipe.creates);
+				created.worldPosition = worldPosition;
+				items.Add(created);
+			}
 		}
 	}
 
