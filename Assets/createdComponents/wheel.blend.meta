@@ -1,0 +1,144 @@
+fileFormatVersion: 2
+guid: 70936854129bfa54885b407d3d1a5415
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: BezierCircle
+    100002: Circle_000
+    100004: Circle_001
+    100006: Circle_002
+    100008: Cube
+    100010: Cube_001
+    100012: Empty
+    100014: Empty_001
+    100016: tyre_tread
+    100018: tyre_tread_MeshPart0
+    100020: tyre_tread_MeshPart1
+    100022: tyre_tread_MeshPart2
+    100024: tyre_tread_MeshPart3
+    100026: tyre_tread_MeshPart4
+    100028: tyre_tread_MeshPart5
+    100030: tyre_tread_MeshPart6
+    100032: tyre_tread_MeshPart7
+    100034: tyre_tread_MeshPart8
+    100036: //RootNode
+    400000: BezierCircle
+    400002: Circle_000
+    400004: Circle_001
+    400006: Circle_002
+    400008: Cube
+    400010: Cube_001
+    400012: Empty
+    400014: Empty_001
+    400016: tyre_tread
+    400018: tyre_tread_MeshPart0
+    400020: tyre_tread_MeshPart1
+    400022: tyre_tread_MeshPart2
+    400024: tyre_tread_MeshPart3
+    400026: tyre_tread_MeshPart4
+    400028: tyre_tread_MeshPart5
+    400030: tyre_tread_MeshPart6
+    400032: tyre_tread_MeshPart7
+    400034: tyre_tread_MeshPart8
+    400036: //RootNode
+    2300000: BezierCircle
+    2300002: Circle_000
+    2300004: Circle_001
+    2300006: Circle_002
+    2300008: Cube
+    2300010: Cube_001
+    2300012: tyre_tread_MeshPart0
+    2300014: tyre_tread_MeshPart1
+    2300016: tyre_tread_MeshPart2
+    2300018: tyre_tread_MeshPart3
+    2300020: tyre_tread_MeshPart4
+    2300022: tyre_tread_MeshPart5
+    2300024: tyre_tread_MeshPart6
+    2300026: tyre_tread_MeshPart7
+    2300028: tyre_tread_MeshPart8
+    3300000: BezierCircle
+    3300002: Circle_000
+    3300004: Circle_001
+    3300006: Circle_002
+    3300008: Cube
+    3300010: Cube_001
+    3300012: tyre_tread_MeshPart0
+    3300014: tyre_tread_MeshPart1
+    3300016: tyre_tread_MeshPart2
+    3300018: tyre_tread_MeshPart3
+    3300020: tyre_tread_MeshPart4
+    3300022: tyre_tread_MeshPart5
+    3300024: tyre_tread_MeshPart6
+    3300026: tyre_tread_MeshPart7
+    3300028: tyre_tread_MeshPart8
+    4300000: Cube_001
+    4300002: BezierCircle
+    4300004: tyre_tread_MeshPart0
+    4300006: tyre_tread_MeshPart1
+    4300008: tyre_tread_MeshPart2
+    4300010: tyre_tread_MeshPart3
+    4300012: tyre_tread_MeshPart4
+    4300014: tyre_tread_MeshPart5
+    4300016: tyre_tread_MeshPart6
+    4300018: tyre_tread_MeshPart7
+    4300020: tyre_tread_MeshPart8
+    4300022: Circle_000
+    4300024: Circle_002
+    4300026: Cube
+    4300028: Circle_001
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
