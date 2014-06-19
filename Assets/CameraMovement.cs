@@ -41,11 +41,10 @@ namespace pp {
 				vel.y -= moveSpeed * 4;
 
 			// Constrain movement
-			float rangeZ = max.z - min.z;
 			Vector3 pos = transform.position + vel;
 			pos.x = Util.Clamp(pos.x, min.x, max.x);
 			pos.y = Util.Clamp(pos.y, startY - maxZoomIn, startY + maxZoomOut);
-			pos.z = Util.Clamp(pos.z, min.z - (rangeZ / 2), max.z - rangeZ);
+			pos.z = Util.Clamp(pos.z, min.z - 10.0f, max.z - 10.0f);
 
 			transform.position = pos;
 		}
