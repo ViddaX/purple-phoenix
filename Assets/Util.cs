@@ -37,6 +37,13 @@ namespace pp {
 				throw new NotImplementedException();
 			}
 		}
+
+		public static void ScaleGUI() {
+			//set up scaling
+			float rx = Screen.width / 1680.0f;
+			float ry = Screen.height / 1050.0f;
+			GUI.matrix = Matrix4x4.TRS (Vector3.zero, Quaternion.identity, new Vector3 (rx, ry, 1)); 
+		}
 	}
 
 }

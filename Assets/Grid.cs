@@ -15,25 +15,17 @@ namespace pp {
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
 		public ItemType Recipe;
 		public float Money = 1000;
+
 		// Selection parameters
-		private const int MODE_MODIFY = 1; // Add or remove a block
-		private const int MODE_SELECT_TARGET = 2; // Select a block target
+		public const int MODE_MODIFY = 1; // Add or remove a block
+		public const int MODE_SELECT_TARGET = 2; // Select a block target
+		public const int MODE_DELETE = 3; // Remove a block
 
 		private int mode = MODE_MODIFY;
 		private Queue<Block> targets = new Queue<Block>(); // List of targets for RobotArm
 		public ItemType recipe { set; get; } // Recipe for new combiners
 		public Direction direction { set; get; }
-		private BlockType mSpawnType;
-		public BlockType spawnType { 
-			set {
-				mSpawnType = value;
-				mode = MODE_MODIFY;
-				useMark = false;
-			}
-			get {
-				return mSpawnType;
-			}
-		}
+		public BlockType spawnType { set; get; }
 
 		// Ghost parameters
 		private Marker marker;
@@ -74,8 +66,10 @@ namespace pp {
 				if (GUIUtility.hotControl == 0 && Input.GetMouseButtonDown (0)) {
 					if (mode == MODE_MODIFY) {
 						OnModify(hitGrid);
-					} else {
+					} else if (mode == MODE_SELECT_TARGET) {
 						OnSelectTarget(hitGrid);
+					} else if (mode == MODE_DELETE) {
+						OnDelete(hitGrid);
 					}
 				}
 			}
@@ -171,6 +165,14 @@ namespace pp {
 			}
 		}
 
+		public void OnDelete(Vector2i pos) {
+			Block selected = Get(pos.x, pos.y);
+			if (selected != null) {
+				selected.Destroy();
+				blocks[pos.x, pos.y] = null;
+			}
+		}
+
 		public Block CreateBasicBlock(BlockType type) {
 			switch (type) {
 				case BlockType.CONVEYOR:
@@ -180,6 +182,15 @@ namespace pp {
 				default:
 					return null;
 			}
+		}
+
+		public void SetMode(int mode) {
+			SetMode (mode, spawnType);
+		}
+
+		public void SetMode(int mode, BlockType type) {
+			this.mode = mode;
+			this.spawnType = type;
 		}
 
 		public Vector3 GetPlaneOrigin() {
