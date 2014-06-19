@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 namespace pp {
 
@@ -22,7 +23,12 @@ namespace pp {
 		}
 
 		public Entity(string prefab) {
-			this.gameObject = (GameObject) Object.Instantiate(Resources.Load(prefab));
+			try {
+				this.gameObject = (GameObject) UnityEngine.Object.Instantiate(Resources.Load(prefab));
+			} catch (ArgumentException e) {
+				Debug.LogWarning("Missing prefab " + prefab + ", falling back to default");
+				this.gameObject = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("items/IronSheet"));
+			}
 		}
 
 		public virtual void Destroy() {

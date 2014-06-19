@@ -4,6 +4,8 @@ using System;
 namespace pp {
 
 	public static class Util {
+		public static readonly System.Random rng = new System.Random();
+
 		public static float GetRotationAngle(this Direction dir) {
 			switch (dir) {
 			case Direction.NORTH:

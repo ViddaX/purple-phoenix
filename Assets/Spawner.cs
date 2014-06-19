@@ -1,4 +1,5 @@
 using UnityEngine;
+using System; 
 
 namespace pp {
 
@@ -21,6 +22,8 @@ namespace pp {
 		}
 
 		public void Start() {
+			SelectNextItem();
+
 			ResetSpawnTimer();
 			mRunning = true;
 		}
@@ -33,13 +36,15 @@ namespace pp {
 			mNextSpawn = Time.time + spawnDelay;
 		}
 
-		public static Item Spawn(ItemType type) {
-			switch (type) {
-			case ItemType.IRON_SHEET:
-				return new IronSheet();
-			default:
-				return null;
-			}
+		public Item Spawn() {
+			Item i = Item.NewItem(nextItem);
+			SelectNextItem();
+			return i;
+		}
+
+		public void SelectNextItem() {
+			Array all = Enum.GetValues(typeof(ItemType));
+			nextItem = (ItemType) all.GetValue(1 + Util.rng.Next(all.Length - 2));
 		}
 	}
 

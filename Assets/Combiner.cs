@@ -44,7 +44,7 @@ namespace pp {
 			inventory.Clear();
 
 			if (success) {
-				Item created = Spawner.Spawn(recipe.creates);
+				Item created = Item.NewItem(recipe.creates);
 				created.worldPosition = worldPosition;
 				items.Add(created);
 			}

@@ -3,17 +3,17 @@
 /// Raw material types.
 /// </summary>
 public enum ItemType {
-	IRON_SHEET,
+	None,
+	IronSheet,
 	Wheel,
 	Rubber,
 	Aluminum,
-	Seat,
+	Seat, 
 	Leather,
 	Cotton,
-	Car_body,
-	Steal,
-	Window,
+	CarBody,
+	Steel,
+	Window, 
 	Glass,
-	Car,
-	NONE
+	Car
 }

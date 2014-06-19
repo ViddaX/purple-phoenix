@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+
 namespace pp {
 
 	/// <summary>
 	/// An object which can appear on a conveyor belt.
 	/// </summary>
-	public abstract class Item : Entity {
+	public class Item : Entity {
 		private const float fallFadeDelay = 2.0f;
 		private System.Random rng = new System.Random();
 		protected ItemType type;
@@ -33,12 +35,22 @@ namespace pp {
 			                          200.0f + (50.0f * (float) rng.NextDouble())));
 			towards.y = 180.0f;
 
-			Color color = gameObject.renderer.material.color;
-			color.a = 0.25f;
-			gameObject.renderer.material.color = color;
-			gameObject.rigidbody.AddForce(towards, ForceMode.Acceleration);
+			if (gameObject.renderer != null) {
+				Color color = gameObject.renderer.material.color;
+				color.a = 0.25f;
+				gameObject.renderer.material.color = color;
+			}
+
+			if (gameObject.rigidbody != null) {
+				gameObject.rigidbody.AddForce(towards, ForceMode.Acceleration);
+			}
 
 			GameObject.Destroy(gameObject, fallFadeDelay);
+		}
+
+		public static Item NewItem(ItemType type) {
+			// Use the enum name for prefab
+			return new Item(type, "items/" + Enum.GetName(typeof(ItemType), type));
 		}
 	}
 

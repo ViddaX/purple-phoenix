@@ -12,8 +12,8 @@ namespace pp {
 				return;
 			
 			// Time to spawn an item
-			if (p.nextItem != ItemType.NONE) {
-				Item item = Spawner.Spawn(p.nextItem);
+			if (p.nextItem != ItemType.None) {
+				Item item = p.Spawn();
 
 				Vector3 spawnPos = p.worldPosition;
 				spawnPos.y += 0.4f;

@@ -13,7 +13,6 @@ namespace pp {
 		private const int gridWidth = 30;
 		private const int gridHeight = 40;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
-		public ItemType Recipe;
 		public float Money = 1000;
 
 		// Selection parameters
@@ -40,7 +39,6 @@ namespace pp {
 		public void Awake() {
 			// Add a single spawner
 			Spawner spawner = new Spawner();
-			spawner.nextItem = ItemType.IRON_SHEET;
 			Set(4, gridHeight - 10, spawner);
 			spawner.Start();
 
@@ -144,6 +142,13 @@ namespace pp {
 
 				Alerts.ShowMessage("Cannot place - something is blocking the way!");
 				return;
+			}
+
+			if (spawnType == BlockType.Combiner){
+				if (recipe == ItemType.None) {
+					Alerts.ShowMessage("Please select a recipe before placing that.");
+					return;
+				}
 			}
 
 			Block created = CreateBasicBlock(spawnType);

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace pp
@@ -17,19 +17,19 @@ namespace pp
 					GUI.Box (new Rect (200, 70, 130, 195), "Recipe");
 
 					if (GUI.Button (new Rect (210, 100, 110, 30), "Seat")) {
-						grid.Recipe = ItemType.Seat;
+						grid.recipe = ItemType.Seat;
 					}
 					if (GUI.Button (new Rect (210, 130, 110, 30), "Wheel")) {
-						grid.Recipe = ItemType.Wheel;
+						grid.recipe = ItemType.Wheel;
 					}
 					if (GUI.Button (new Rect (210, 160, 110, 30), "Car body")) {
-						grid.Recipe = ItemType.Car_body;
+						grid.recipe = ItemType.CarBody;
 					}
 					if (GUI.Button (new Rect (210, 190, 110, 30), "Window")) {
-						grid.Recipe = ItemType.Window;
+					//	grid.recipe = ItemType.Window;
 					}
-					if (GUI.Button (new Rect (210, 220, 110, 30), "Car")) {
-						grid.Recipe = ItemType.Car;
+					if (GUI.Button (new Rect (210, 220, 110, 30), "Car Body")) {
+						grid.recipe = ItemType.CarBody;
 					}
 				}
 			}
