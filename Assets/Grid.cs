@@ -11,7 +11,7 @@ namespace pp {
 	public class Grid : MonoBehaviour {
 		private const int gridLayerMask = 1 << 8; // Grid is on layer 8
 		private const int gridWidth = 30;
-		private const int gridHeight = 16;
+		private const int gridHeight = 40;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
 		public ItemType Recipe;
 		public float Money = 1000;
@@ -41,7 +41,7 @@ namespace pp {
 			// Add a single spawner
 			Spawner spawner = new Spawner();
 			spawner.nextItem = ItemType.IRON_SHEET;
-			Set(4, 10, spawner);
+			Set(4, gridHeight - 10, spawner);
 			spawner.Start();
 
 			marker = new Marker();
@@ -177,7 +177,7 @@ namespace pp {
 
 		public void OnDelete(Vector2i pos) {
 			Block selected = Get(pos.x, pos.y);
-			if (selected != null) {
+			if (selected != null && selected.blockType.modifiable) {
 				selected.Destroy();
 				blocks[pos.x, pos.y] = null;
 			}

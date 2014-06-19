@@ -10,15 +10,18 @@ namespace pp {
 
 		public readonly int price;
 		public readonly string prefab;
+		public readonly bool modifiable;
 
 		public BlockType(string prefab) {
 			this.prefab = prefab;
 			this.price = Int32.MaxValue;
+			this.modifiable = false;
 		}
 
 		public BlockType(int price, string prefab) {
 			this.price = price;
 			this.prefab = prefab;
+			this.modifiable = true;
 		}
 	}
 

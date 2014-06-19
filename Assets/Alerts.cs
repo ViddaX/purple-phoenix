@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace pp {
 	public class Alerts : MonoBehaviour {
-		public static float DEFAULT_DURATION = 2.0f;
+		public static float DEFAULT_DURATION = 1.5f;
 		private static Queue<AlertMessage> messages = new Queue<AlertMessage>();
 		private static AlertMessage cur;
 		private static float messageEnd;
