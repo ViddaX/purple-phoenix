@@ -14,14 +14,14 @@ namespace pp{
 			GUI.TextArea (new Rect (20, 20, 100, 50), "Money: $" + grid.Money.ToString(), style);
 			//	GUI.DrawTexture (new Rect (70, 120, 100,100 ), aTexture, ScaleMode.ScaleToFit, true, 10.0f);
 
-			GUI.Box(new Rect(30, 90, 150, 170), "Gadgets");
+			GUI.Box(new Rect(30, 90, 150, 190), "Gadgets");
 
 			if(GUI.Button(new Rect(35, 120, 140, 30), "Conveyor"/*,Menubuttonstyle*/)) {
 				grid.SetMode(Grid.MODE_MODIFY, BlockType.Conveyor);
 				RecipeSelector.show = false;
 			}
 
-			if(GUI.Button(new Rect(40,150,140,30), "Lifter")) {
+			if(GUI.Button(new Rect(40,150,140,30), "Grabber")) {
 				grid.SetMode(Grid.MODE_MODIFY, BlockType.Grabber);
 				RecipeSelector.show = false;
 			}
@@ -31,7 +31,12 @@ namespace pp{
 				RecipeSelector.show = true;
 			}
 
-			if(GUI.Button(new Rect(40,230,140,30), "Destroy")) {
+			if(GUI.Button(new Rect(40,210,140,30), "Splitter")) {
+				grid.SetMode(Grid.MODE_MODIFY, BlockType.Splitter);
+				RecipeSelector.show = false;
+			}
+
+			if(GUI.Button(new Rect(40,240,140,30), "Destroy")) {
 				grid.SetMode (Grid.MODE_DELETE);
 				RecipeSelector.show = false;
 			}

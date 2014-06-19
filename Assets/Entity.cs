@@ -25,7 +25,7 @@ namespace pp {
 		public Entity(string prefab) {
 			try {
 				this.gameObject = (GameObject) UnityEngine.Object.Instantiate(Resources.Load(prefab));
-			} catch (ArgumentException e) {
+			} catch (ArgumentException) {
 				Debug.LogWarning("Missing prefab " + prefab + ", falling back to default");
 				this.gameObject = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("items/IronSheet"));
 			}

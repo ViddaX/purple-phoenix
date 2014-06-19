@@ -4,7 +4,7 @@ using System;
 namespace pp {
 
 	public class ConveyorBehaviour : MonoBehaviour {
-		private const int maxItems = 2;
+		private const int maxItems = 1;
 		private GameObject belt;
 		private Item lastAffected;
 		private Vector3 from;
@@ -13,7 +13,6 @@ namespace pp {
 		public float lerpStart;
 		public Conveyor p { set; get; }
 		public int materialIndex = 0;
-		public Vector2 uvAnimationRate = new Vector2( 0.0f, -1.0f );
 		public Texture[] textures;
 		public float changeInterval = 0.33F;
 		private string textureName = "_MainTex";
@@ -41,13 +40,13 @@ namespace pp {
 			
 			float progress = Math.Min((Time.time - lerpStart) / p.timeTaken, 1.0f);
 			if (progress >= 1.0f) { // Reached center, go in p.direction
-				Vector3 dir3 = GetDirectionVector(p.direction);
+				Vector3 dir3 = p.direction.GetDirectionVector();
 				if (stage == 1) {
 					dir3.Scale(new Vector3(p.size.x / 2, 0, p.size.x / 2));
 					SetupAnimation(p.worldPosition, p.worldPosition + dir3);
 				} else {
 					Block next = p.grid.Get((int) dir3.x + p.coords.x, (int) dir3.z + p.coords.y);
-					if (next != null && next is Conveyor) {
+					if (next != null && (next is Conveyor || next is Splitter)) {
 						next.OnEnter(affected); // Pass along the item
 					} else {
 						affected.Fall(p.gameObject.transform.forward);
@@ -74,22 +73,6 @@ namespace pp {
 			this.from.y = p.worldPosition.y + 0.35f;
 			this.to.y = this.from.y;
 		}
-
-		private Vector3 GetDirectionVector(Direction dir) {
-			switch (dir) {
-			case Direction.NORTH:
-				return new Vector3(1.0f, 0.0f);
-			case Direction.EAST:
-				return new Vector3(0.0f, 0.0f, -1.0f);
-			case Direction.SOUTH:
-				return new Vector3(-1.0f, 0.0f);
-			case Direction.WEST:
-				return new Vector3(0.0f, 0.0f, 1.0f);
-			default:
-				Debug.Log (dir);
-				throw new NotImplementedException();
-			}
-		}
 	
 		void Start(){
 			belt = p.gameObject.transform.FindChild("Cube").gameObject;
@@ -97,10 +80,7 @@ namespace pp {
 		}
 		void LateUpdate()
 		{
-			if (uvOffset.y < -2) {
-				uvOffset.y=1;		
-			}
-			uvOffset += ( uvAnimationRate * Time.deltaTime );
+			uvOffset.y = p.grid.conveyorTextureY;
 		
 			if( belt.renderer.enabled )
 			{

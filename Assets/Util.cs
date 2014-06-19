@@ -31,6 +31,22 @@ namespace pp {
 			float ry = Screen.height / 1050.0f;
 			GUI.matrix = Matrix4x4.TRS (Vector3.zero, Quaternion.identity, new Vector3 (rx, ry, 1)); 
 		}
+
+		public static Vector3 GetDirectionVector(this Direction dir) {
+			switch (dir) {
+			case Direction.NORTH:
+				return new Vector3(1.0f, 0.0f);
+			case Direction.EAST:
+				return new Vector3(0.0f, 0.0f, -1.0f);
+			case Direction.SOUTH:
+				return new Vector3(-1.0f, 0.0f);
+			case Direction.WEST:
+				return new Vector3(0.0f, 0.0f, 1.0f);
+			default:
+				Debug.Log (dir);
+				throw new NotImplementedException();
+			}
+		}
 	}
 
 }

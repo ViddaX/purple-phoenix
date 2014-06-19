@@ -21,8 +21,10 @@ namespace pp {
 		/// <param name="prefab">The prefab used to create the game object</param>
 		public Item(ItemType type, string prefab) : base(prefab) {
 			this.type = type;
-			gameObject.AddComponent<Rigidbody>();
-			gameObject.AddComponent<BoxCollider>();
+			if (gameObject.rigidbody == null)
+				gameObject.AddComponent<Rigidbody>();
+			if (gameObject.collider == null)
+				gameObject.AddComponent<BoxCollider>();
 
 			gameObject.rigidbody.isKinematic = true;
 		}
@@ -33,7 +35,7 @@ namespace pp {
 			towards.Scale(new Vector3(180.0f + (50.0f * (float) rng.NextDouble()),
 			                          0.0f,
 			                          200.0f + (50.0f * (float) rng.NextDouble())));
-			towards.y = 180.0f;
+			towards.y = 250.0f;
 
 			if (gameObject.renderer != null) {
 				Color color = gameObject.renderer.material.color;

@@ -31,6 +31,9 @@ namespace pp {
 		private bool useMark;
 		public Vector2i mark { set; get; }
 
+		public float conveyorTextureY; // Hacky hacks
+		public float conveyorAnimRate = -1.0f;
+
 		public Grid() {
 			direction = Direction.EAST;
 			spawnType = BlockType.Conveyor;
@@ -46,6 +49,11 @@ namespace pp {
 		}
 
 		public void Update() {
+			if (conveyorTextureY < -1) {
+				conveyorTextureY=1;		
+			}
+			conveyorTextureY += ( conveyorAnimRate * Time.deltaTime );
+
 			// Find the hovered grid tile
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
@@ -193,6 +201,8 @@ namespace pp {
 				return new Conveyor();
 			} else if (type == BlockType.Combiner) {
 				return new Combiner(RecipeFactory.NewRecipe(recipe));
+			} else if (type == BlockType.Splitter){
+				return new Splitter(ItemProperty.Metal);
 			} else {
 				return null;
 			}
@@ -200,6 +210,8 @@ namespace pp {
 
 		public void SetMode(int mode) {
 			SetMode (mode, spawnType);
+
+			useMark = (mode == MODE_SELECT_TARGET);
 		}
 
 		public void SetMode(int mode, BlockType type) {
