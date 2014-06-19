@@ -12,6 +12,7 @@ namespace pp {
 		private const int gridLayerMask = 1 << 8; // Grid is on layer 8
 		private const int gridWidth = 30;
 		private const int gridHeight = 40;
+		public ItemProperty ItemProperty;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
 		public float Money = 1000;
 
@@ -202,7 +203,7 @@ namespace pp {
 			} else if (type == BlockType.Combiner) {
 				return new Combiner(RecipeFactory.NewRecipe(recipe));
 			} else if (type == BlockType.Splitter){
-				return new Splitter(ItemProperty.Metal);
+				return new Splitter(ItemProperty);
 			} else {
 				return null;
 			}

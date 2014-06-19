@@ -45,13 +45,14 @@ namespace pp {
 					dir3.Scale(new Vector3(p.size.x / 2, 0, p.size.x / 2));
 					SetupAnimation(p.worldPosition, p.worldPosition + dir3);
 				} else {
+					p.OnExit(affected);
+
 					Block next = p.grid.Get((int) dir3.x + p.coords.x, (int) dir3.z + p.coords.y);
 					if (next != null && (next is Conveyor || next is Splitter)) {
 						next.OnEnter(affected); // Pass along the item
 					} else {
 						affected.Fall(p.gameObject.transform.forward);
 					}
-					p.OnExit(affected);
 					
 					// Reset for next item
 					affected = null;
