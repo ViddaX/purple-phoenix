@@ -7,7 +7,7 @@ namespace pp {
 	public class Conveyor : Block {
 		public float timeTaken { set; get; }
 
-		public Conveyor() : this(BlockType.CONVEYOR) {
+		public Conveyor() : this(BlockType.Conveyor) {
 			timeTaken = 0.25f;
 		}
 

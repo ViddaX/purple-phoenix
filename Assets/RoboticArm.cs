@@ -7,7 +7,7 @@ namespace pp
 		public Block from { get; set; }
 		public Block to { get; set; }
 
-		public RoboticArm (Block from, Block to) : this(BlockType.GRABBER) {
+		public RoboticArm (Block from, Block to) : this(BlockType.Grabber) {
 			this.from = from;
 			this.to = to;
 		}

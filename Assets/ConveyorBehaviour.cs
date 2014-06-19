@@ -13,6 +13,10 @@ namespace pp {
 		public Conveyor p { set; get; }
 		
 		public void FixedUpdate() {
+			UpdateItems();
+		}
+
+		protected void UpdateItems() {
 			int count = p.items.Count;
 			if (count >= maxItems + 1) { // throw something off if we get too full
 				p.items[maxItems].Fall(p.gameObject.transform.forward);
@@ -20,14 +24,14 @@ namespace pp {
 			} else if (count == 0) {
 				return;
 			}
-
+			
 			Item affected = p.items [0];
 			if (lastAffected != affected) {
 				stage = 0;
 				SetupAnimation(affected.worldPosition, p.worldPosition);
 				lastAffected = affected ;
 			}
-
+			
 			float progress = Math.Min((Time.time - lerpStart) / p.timeTaken, 1.0f);
 			if (progress >= 1.0f) { // Reached center, go in p.direction
 				Vector3 dir3 = GetDirectionVector(p.direction);
@@ -36,13 +40,13 @@ namespace pp {
 					SetupAnimation(p.worldPosition, p.worldPosition + dir3);
 				} else {
 					Block next = p.grid.Get((int) dir3.x + p.coords.x, (int) dir3.z + p.coords.y);
-					if (next != null && next.blockType == BlockType.CONVEYOR) {
+					if (next != null && next.blockType == BlockType.Conveyor) {
 						next.OnEnter(affected); // Pass along the item
 					} else {
 						affected.Fall(p.gameObject.transform.forward);
 					}
 					p.OnExit(affected);
-
+					
 					// Reset for next item
 					affected = null;
 					stage = 0;

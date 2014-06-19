@@ -23,21 +23,6 @@ namespace pp {
 			return Math.Min(Math.Max (f, min), max);
 		}
 
-		public static string GetPrefabName(BlockType type) {
-			switch (type) {
-			case BlockType.COMBINER:
-				return "spawner";
-			case BlockType.CONVEYOR:
-				return "conveyor";
-			case BlockType.GRABBER:
-				return "RoboticArm";
-			case BlockType.SPAWNER:
-				return "spawner";
-			default:
-				throw new NotImplementedException();
-			}
-		}
-
 		public static void ScaleGUI() {
 			//set up scaling
 			float rx = Screen.width / 1680.0f;

@@ -35,7 +35,7 @@ namespace pp {
 		/// Initializes a new instance of the <see cref="Block"/> class.
 		/// </summary>
 		/// <param name="prefab">The prefab identifier used to create the game object</param>
-		public Block(BlockType type) : base(Util.GetPrefabName(type)) {
+		public Block(BlockType type) : base(type.prefab) {
 			this.items = new List<Item>();
 			this.mBlockType = type;
 

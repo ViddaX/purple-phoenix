@@ -17,17 +17,17 @@ namespace pp{
 			GUI.Box(new Rect(30, 90, 170, 170), "Gadgets");
 
 			if(GUI.Button(new Rect(35, 120, 160, 30), "Conveyor"/*,Menubuttonstyle*/)) {
-				grid.SetMode(Grid.MODE_MODIFY, BlockType.CONVEYOR);
+				grid.SetMode(Grid.MODE_MODIFY, BlockType.Conveyor);
 				Selectrecipe.BuildComb = false;
 			}
 
 			if(GUI.Button(new Rect(40,150,160,30), "Lifter")) {
-				grid.SetMode(Grid.MODE_MODIFY, BlockType.GRABBER);
+				grid.SetMode(Grid.MODE_MODIFY, BlockType.Grabber);
 				Selectrecipe.BuildComb = false;
 			}
 
 			if(GUI.Button(new Rect(40,180,160,30), "Combiner")) {
-				grid.SetMode(Grid.MODE_MODIFY, BlockType.COMBINER);
+				grid.SetMode(Grid.MODE_MODIFY, BlockType.Combiner);
 				Selectrecipe.BuildComb = true;
 			}
 

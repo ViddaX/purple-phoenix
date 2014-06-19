@@ -13,7 +13,7 @@ namespace pp {
 		public bool running { get { return mRunning; } }
 		public ItemType nextItem { set; get; }
 
-		public Spawner() : this(BlockType.SPAWNER) {
+		public Spawner() : this(BlockType.Spawner) {
 		}
 
 		public Spawner(BlockType type) : base(type) {

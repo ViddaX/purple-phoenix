@@ -34,7 +34,7 @@ namespace pp {
 
 		public Grid() {
 			direction = Direction.EAST;
-			spawnType = BlockType.CONVEYOR;
+			spawnType = BlockType.Conveyor;
 		}
 
 		public void Awake() {
@@ -73,6 +73,16 @@ namespace pp {
 					}
 				}
 			}
+		}
+
+		public void BuyBlock(Vector2i pos, Block block) {
+			if (block.blockType.price > Money) {
+				Alerts.ShowMessage("Not enough money. You need $" + block.blockType.price);
+				return;
+			}
+
+			Money -= block.blockType.price;
+			Set(pos, block);
 		}
 
 		public void Set(Vector2i pos, Block block) {
@@ -118,7 +128,7 @@ namespace pp {
 
 		public void OnModify(Vector2i pos) {
 			Block existing = Get(pos.x, pos.y);
-			if (existing == null && spawnType == BlockType.GRABBER) {
+			if (existing == null && spawnType == BlockType.Grabber) {
 				mode = MODE_SELECT_TARGET;
 				useMark = true;
 				mark = pos;
@@ -138,24 +148,24 @@ namespace pp {
 
 			Block created = CreateBasicBlock(spawnType);
 			if (created != null)
-				Set(pos.x, pos.y, created);
+				BuyBlock(pos, created);
 		}
 
 		public void OnSelectTarget(Vector2i pos) {
-			if (spawnType != BlockType.GRABBER)
+			if (spawnType != BlockType.Grabber)
 				throw new ArgumentException();
 
 			Block selected = Get(pos.x, pos.y);
 			if (selected != null) {
 				if (targets.Contains(selected)) {
 					Alerts.ShowMessage("You cannot select the same block twice.");
-				} else if (selected.blockType != BlockType.CONVEYOR) {
+				} else if (selected.blockType != BlockType.Conveyor) {
 					Alerts.ShowMessage("You can only pick up objects from a conveyor belt.");
 				} else {
 					// Add a block target
 					targets.Enqueue(selected);
 					if (targets.Count == 2) {
-						Set((int) mark.x, (int) mark.y, new RoboticArm(targets.Dequeue(), targets.Dequeue()));
+						BuyBlock(mark, new RoboticArm(targets.Dequeue(), targets.Dequeue()));
 						mode = MODE_MODIFY;
 						useMark = false;
 					}
@@ -174,13 +184,12 @@ namespace pp {
 		}
 
 		public Block CreateBasicBlock(BlockType type) {
-			switch (type) {
-				case BlockType.CONVEYOR:
-					return new Conveyor();
-				case BlockType.COMBINER:
-					// return new Combiner(RecipeFactory.NewRecipe(recipe));
-				default:
-					return null;
+			if (type == BlockType.Conveyor) {
+				return new Conveyor();
+			} else if (type == BlockType.Combiner) {
+				return new Combiner(RecipeFactory.NewRecipe(recipe));
+			} else {
+				return null;
 			}
 		}
 
