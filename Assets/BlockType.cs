@@ -8,6 +8,7 @@ namespace pp {
 		public static readonly BlockType Grabber = new BlockType(100, "RoboticArm");
 		public static readonly BlockType Combiner = new BlockType(50, "spawner");
 		public static readonly BlockType Splitter = new BlockType(25, "spawner");
+		public static readonly BlockType Builder = new BlockType(50, "spawner");
 
 		public readonly int price;
 		public readonly string prefab;

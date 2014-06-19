@@ -34,6 +34,8 @@ namespace pp {
 		public float conveyorTextureY; // Hacky hacks
 		public float conveyorAnimRate = -1.0f;
 
+		public ProjectType project = ProjectType.CAR;
+
 		public Grid() {
 			direction = Direction.EAST;
 			spawnType = BlockType.Conveyor;
@@ -203,6 +205,8 @@ namespace pp {
 				return new Combiner(RecipeFactory.NewRecipe(recipe));
 			} else if (type == BlockType.Splitter){
 				return new Splitter(ItemProperty.Metal);
+			} else if (type == BlockType.Builder) {
+				return new Builder(project);
 			} else {
 				return null;
 			}

@@ -35,7 +35,7 @@ namespace pp {
 				dx = left ? 1 : -1;
 
 			Block dest = grid.Get (coords.x + dx, coords.y + dy);
-			if (dest != null && dest is Conveyor) {
+			if (dest != null && dest is Conveyor && dest != this) {
 				dest.OnEnter(item);
 			} else {
 				item.Fall(new Vector3(dx, 0.0f, dy));

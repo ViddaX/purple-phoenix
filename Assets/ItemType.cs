@@ -15,6 +15,7 @@ namespace pp {
 		Leather,
 		Cotton,
 		CarBody,
+		BikeBody,
 		Steel,
 		Window, 
 		Glass
@@ -29,12 +30,14 @@ namespace pp {
 				return new ItemProperty[] {ItemProperty.Metal, ItemProperty.Thin, ItemProperty.Light};
 			case ItemType.CarBody:
 				return new ItemProperty[] {ItemProperty.Metal, ItemProperty.IrregularShape, ItemProperty.Heavy};
+			case ItemType.BikeBody:
+				return new ItemProperty[] {ItemProperty.Metal, ItemProperty.IrregularShape, ItemProperty.Heavy};
 			case ItemType.Cotton:
 				return new ItemProperty[] {ItemProperty.Light, ItemProperty.Small, ItemProperty.Thick};
 			case ItemType.Glass:
 				return new ItemProperty[] {ItemProperty.Light, ItemProperty.Transparent, ItemProperty.Thin};
 			case ItemType.Rubber:
-				return new ItemProperty[] {ItemProperty.Thick, ItemProperty.Heavy};
+				return new ItemProperty[] {ItemProperty.Thick, ItemProperty.Heavy, ItemProperty.Circular};
 			case ItemType.Leather:
 				return new ItemProperty[] {ItemProperty.Thin, ItemProperty.Heavy};
 			case ItemType.Steel:

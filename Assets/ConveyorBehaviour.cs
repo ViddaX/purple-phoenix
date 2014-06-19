@@ -4,7 +4,7 @@ using System;
 namespace pp {
 
 	public class ConveyorBehaviour : MonoBehaviour {
-		private const int maxItems = 1;
+		private const int maxItems = 2;
 		private GameObject belt;
 		private Item lastAffected;
 		private Vector3 from;
@@ -24,7 +24,7 @@ namespace pp {
 
 		protected void UpdateItems() {
 			int count = p.items.Count;
-			if (count >= maxItems + 1) { // throw something off if we get too full
+			if (p.blockType == BlockType.Conveyor && count >= maxItems + 1) { // conveyors throw something off if we get too full
 				p.items[maxItems].Fall(p.gameObject.transform.forward);
 				p.items.RemoveAt(maxItems);
 			} else if (count == 0) {
@@ -45,13 +45,14 @@ namespace pp {
 					dir3.Scale(new Vector3(p.size.x / 2, 0, p.size.x / 2));
 					SetupAnimation(p.worldPosition, p.worldPosition + dir3);
 				} else {
+					p.OnExit(affected);
+
 					Block next = p.grid.Get((int) dir3.x + p.coords.x, (int) dir3.z + p.coords.y);
 					if (next != null && (next is Conveyor || next is Splitter)) {
 						next.OnEnter(affected); // Pass along the item
 					} else {
 						affected.Fall(p.gameObject.transform.forward);
 					}
-					p.OnExit(affected);
 					
 					// Reset for next item
 					affected = null;
