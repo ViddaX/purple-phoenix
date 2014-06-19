@@ -1,5 +1,5 @@
 using System.Collections;
-
+using UnityEngine;
 namespace pp
 {
 	public class BuildingMenu : MonoBehaviour
@@ -21,7 +21,7 @@ namespace pp
 			
 			// GUI.DrawTexture (new Rect (70, 120, 100,100 ), aTexture, ScaleMode.ScaleToFit, true, 10.0f);
 			
-			GUI.Box (new Rect (30, 90, 150, 190), "Gadgets");
+			GUI.Box (new Rect (30, 90, 150, 210), "Gadgets");
 			GUI.SetNextControlName ("a");
 			
 			if (GUI.Button (new Rect (35, 120, 140, 30), "Conveyor")) {
@@ -29,6 +29,7 @@ namespace pp
 				grid.SetMode (Grid.MODE_MODIFY, BlockType.Conveyor);
 				RecipeSelector.show = false;
 				SplitterMenu.show = false;
+				BuilderMenu.show = false;
 			}
 			
 			GUI.SetNextControlName ("b");
@@ -37,6 +38,7 @@ namespace pp
 				grid.SetMode (Grid.MODE_MODIFY, BlockType.Grabber);
 				RecipeSelector.show = false;
 				SplitterMenu.show = false;
+				BuilderMenu.show = false;
 			}
 			
 			
@@ -46,6 +48,7 @@ namespace pp
 				grid.SetMode (Grid.MODE_MODIFY, BlockType.Combiner);
 				RecipeSelector.show = true;
 				SplitterMenu.show = false;
+				BuilderMenu.show = false;
 			}
 			
 			GUI.SetNextControlName ("d");
@@ -53,6 +56,7 @@ namespace pp
 				GUI.FocusControl ("d");
 				grid.SetMode (Grid.MODE_MODIFY, BlockType.Splitter);
 				RecipeSelector.show = false;
+				BuilderMenu.show = false;
 				SplitterMenu.show = true;
 			}
 			
@@ -62,6 +66,15 @@ namespace pp
 				grid.SetMode (Grid.MODE_DELETE);
 				RecipeSelector.show = false;
 				SplitterMenu.show = false;
+				BuilderMenu.show = false;
+			}
+			GUI.SetNextControlName ("f");
+			if (GUI.Button (new Rect (40, 270, 140, 30), "Builder")) {
+				GUI.FocusControl ("f");
+				grid.SetMode (Grid.MODE_MODIFY, BlockType.Builder);
+				RecipeSelector.show = false;
+				SplitterMenu.show = false;
+				BuilderMenu.show = true;
 			}
 		}
 		

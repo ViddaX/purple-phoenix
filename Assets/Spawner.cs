@@ -13,6 +13,7 @@ namespace pp {
 		public float nextSpawn { get { return mNextSpawn; } }
 		public bool running { get { return mRunning; } }
 		public ItemType nextItem { set; get; }
+		private ItemType[] spawnedTypes = new ItemType[] { ItemType.Aluminum, ItemType.Cotton, ItemType.Glass, ItemType.Rubber, ItemType.Leather, ItemType.Steel };
 
 		public Spawner() : this(BlockType.Spawner) {
 		}
@@ -43,8 +44,7 @@ namespace pp {
 		}
 
 		public void SelectNextItem() {
-			Array all = Enum.GetValues(typeof(ItemType));
-			nextItem = (ItemType) all.GetValue(1 + Util.rng.Next(all.Length - 2));
+			nextItem = spawnedTypes[Util.rng.Next(spawnedTypes.Length)];
 		}
 	}
 
