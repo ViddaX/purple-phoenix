@@ -1,57 +1,35 @@
 fileFormatVersion: 2
-guid: 415fe2cce3485be4b809075d2d2eda74
+guid: 08274aecf5dea2a40af36e80a4b95b59
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: Bolt
-    100002: Bolt_MeshPart0
-    100004: Bolt_MeshPart1
-    100006: Cube
-    100008: Cylinder
-    100010: //RootNode
-    100012: Plane
-    100014: Plane_001
-    100016: Plane_002
-    100018: Plane_003
-    100020: Plane_004
-    400000: Bolt
-    400002: Bolt_MeshPart0
-    400004: Bolt_MeshPart1
-    400006: Cube
-    400008: Cylinder
-    400010: //RootNode
-    400012: Plane
-    400014: Plane_001
-    400016: Plane_002
-    400018: Plane_003
-    400020: Plane_004
-    2300000: Bolt_MeshPart0
-    2300002: Bolt_MeshPart1
-    2300004: Cube
-    2300006: Cylinder
-    2300008: Plane
-    2300010: Plane_001
-    2300012: Plane_002
-    2300014: Plane_003
-    2300016: Plane_004
-    3300000: Bolt_MeshPart0
-    3300002: Bolt_MeshPart1
-    3300004: Cube
-    3300006: Cylinder
-    3300008: Plane
-    3300010: Plane_001
-    3300012: Plane_002
-    3300014: Plane_003
-    3300016: Plane_004
-    4300000: Plane_004
-    4300002: Plane_003
-    4300004: Cube
-    4300006: Plane_002
-    4300008: Bolt_MeshPart0
-    4300010: Bolt_MeshPart1
-    4300012: Plane_001
-    4300014: Cylinder
-    4300016: Plane
+    100000: //RootNode
+    100002: earth
+    100004: Light_001
+    100006: Light_002
+    100008: Seat_Recaro_belt
+    100010: Seat_Recaro_HANS
+    400000: //RootNode
+    400002: earth
+    400004: Light_001
+    400006: Light_002
+    400008: Seat_Recaro_belt
+    400010: Seat_Recaro_HANS
+    2300000: earth
+    2300002: Light_001
+    2300004: Light_002
+    2300006: Seat_Recaro_belt
+    2300008: Seat_Recaro_HANS
+    3300000: earth
+    3300002: Light_001
+    3300004: Light_002
+    3300006: Seat_Recaro_belt
+    3300008: Seat_Recaro_HANS
+    4300000: earth
+    4300002: Seat_Recaro_belt
+    4300004: Light_001
+    4300006: Light_002
+    4300008: Seat_Recaro_HANS
     7400000: Default Take
     9500000: //RootNode
   materials:
