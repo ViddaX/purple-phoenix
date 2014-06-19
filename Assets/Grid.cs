@@ -195,6 +195,8 @@ namespace pp {
 			if (selected != null && selected.blockType.modifiable) {
 				selected.Destroy();
 				blocks[pos.x, pos.y] = null;
+
+				Money += selected.blockType.price / 2;
 			}
 		}
 
