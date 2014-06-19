@@ -5,13 +5,20 @@ namespace pp {
 
 	public class ConveyorBehaviour : MonoBehaviour {
 		private const int maxItems = 2;
+		private GameObject belt;
 		private Item lastAffected;
 		private Vector3 from;
 		private Vector3 to;
 		private int stage;
 		public float lerpStart;
 		public Conveyor p { set; get; }
+		public int materialIndex = 0;
+		public Vector2 uvAnimationRate = new Vector2( 0.0f, -1.0f );
+		public Texture[] textures;
+		public float changeInterval = 0.33F;
+		private string textureName = "_MainTex";
 		
+		Vector2 uvOffset = Vector2.zero;
 		public void FixedUpdate() {
 			UpdateItems();
 		}
@@ -82,6 +89,26 @@ namespace pp {
 				Debug.Log (dir);
 				throw new NotImplementedException();
 			}
+		}
+	
+		void Start(){
+			belt = p.gameObject.transform.FindChild("Cube").gameObject;
+			belt.renderer.enabled = true;
+		}
+		void LateUpdate()
+		{
+			if (uvOffset.y < -2) {
+				uvOffset.y=1;		
+			}
+			uvOffset += ( uvAnimationRate * Time.deltaTime );
+		
+			if( belt.renderer.enabled )
+			{
+			
+				belt.renderer.materials[ materialIndex ].SetTextureOffset( textureName, uvOffset );
+
+			}
+
 		}
 	}
 
