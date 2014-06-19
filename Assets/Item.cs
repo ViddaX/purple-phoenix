@@ -35,7 +35,7 @@ namespace pp {
 			towards.Scale(new Vector3(180.0f + (50.0f * (float) rng.NextDouble()),
 			                          0.0f,
 			                          200.0f + (50.0f * (float) rng.NextDouble())));
-			towards.y = 250.0f;
+			towards.y = 550.0f;
 
 			if (gameObject.renderer != null) {
 				Color color = gameObject.renderer.material.color;

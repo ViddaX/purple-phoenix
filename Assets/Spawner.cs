@@ -7,7 +7,7 @@ namespace pp {
 	/// A block that spawns raw materials.
 	/// </summary>
 	public class Spawner : Conveyor {
-		private const float spawnDelay = 1.5f;
+		private const float spawnDelay = 1.0f;
 		private float mNextSpawn;
 		private bool mRunning;
 		public float nextSpawn { get { return mNextSpawn; } }

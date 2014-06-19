@@ -1,8 +1,8 @@
 --------------------------------------------------------------------------------
-Thank you for downloading "Toon assembly line robot v1.0" by sky_D
+Thank you for downloading "Motobike" by Kocer
 Released under
-Creative Commons Attribution, Share Alike 3.0
-Downloaded from http://www.blendswap.com/blends/view/4369
+Creative Commons Attribution 3.0
+Downloaded from http://www.blendswap.com/blends/view/41404
 
 The following is important licensing information, please keep this file for
 archival and future reference when working with the file. It's important that
@@ -18,12 +18,12 @@ at the end of the file.
 VERY IMPORTANT LICENSE INFORMATION:
 
 This blend has been released under
-Creative Commons Attribution, Share Alike 3.0
+Creative Commons Attribution 3.0
 
 This means that you can use it for any purpose you see fit, even commercially,
 as long as you respect these requirements:
 
-	--You MUST give credit to sky_D.
+	--You MUST give credit to Kocer.
 
 
 ################################################################################
@@ -31,8 +31,8 @@ as long as you respect these requirements:
 
 ABOUT THE BLEND:
 
-Ready for Blender 0
-Published on: 2010-09-25 09:25:14
+Ready for Blender 2.61
+Published on: 2012-04-04 15:37:03
 
 --------------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ If you find anomalies in this blend or any of the contained files such as:
 	- Uncredited or incorrect use of other CC licensed works.
 	- Some other troubling issues[1].
 
-Please submit a report from  http://www.blendswap.com/blends/view/4369
+Please submit a report from  http://www.blendswap.com/blends/view/41404
 by pressing the red button with the flag, including links and details that serve
 as evidence and can help us to solve any conflicts or issues derived from the
 contents of this file.
