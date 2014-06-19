@@ -7,7 +7,7 @@ namespace pp {
 		private static Queue<AlertMessage> messages = new Queue<AlertMessage>();
 		private static AlertMessage cur;
 		private static float messageEnd;
-
+		public GUISkin Skin;
 		public static void ShowMessage(AlertMessage message) {
 			if (!message.repeatable && messages.Contains(message))
 				return;
@@ -24,6 +24,7 @@ namespace pp {
 		}
 
 		public void OnGUI() {
+			GUI.skin = Skin;
 			if (cur == null) {
 				if (messages.Count > 0) {
 					cur = messages.Dequeue();
