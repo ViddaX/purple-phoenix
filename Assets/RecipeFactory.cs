@@ -15,10 +15,8 @@ namespace pp
 					return new Recipe (ItemType.CarBody, new RecipePiece (ItemType.Steel, 8));
 			case ItemType.Wheel:
 					return new Recipe (ItemType.Wheel, new RecipePiece (ItemType.Rubber, 1), new RecipePiece (ItemType.Aluminum, 1));
-			// case ItemType.Window:
-			// 		return new Recipe (ItemType.Window, new RecipePiece (ItemType.Glass, 2));
-			// case ItemType.Car:
-			// 		return new Recipe (ItemType.Car, new RecipePiece (ItemType.Wheel, 4), new RecipePiece (ItemType.CarBody, 1), new RecipePiece (ItemType.Seat, 4), new RecipePiece (ItemType.Window, 4));
+			case ItemType.Window:
+			 		return new Recipe (ItemType.Window, new RecipePiece (ItemType.Glass, 2));
 			default :
 					throw new System.ArgumentException (); 
 	

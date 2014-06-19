@@ -4,7 +4,7 @@ using System;
 namespace pp {
 
 	public class ConveyorBehaviour : MonoBehaviour {
-		private const int maxItems = 1;
+		private const int maxItems = 2;
 		private GameObject belt;
 		private Item lastAffected;
 		private Vector3 from;
@@ -24,7 +24,7 @@ namespace pp {
 
 		protected void UpdateItems() {
 			int count = p.items.Count;
-			if (count >= maxItems + 1) { // throw something off if we get too full
+			if (p.blockType == BlockType.Conveyor && count >= maxItems + 1) { // conveyors throw something off if we get too full
 				p.items[maxItems].Fall(p.gameObject.transform.forward);
 				p.items.RemoveAt(maxItems);
 			} else if (count == 0) {
