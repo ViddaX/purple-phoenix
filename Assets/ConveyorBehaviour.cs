@@ -83,7 +83,7 @@ namespace pp {
 		{
 			uvOffset.y = p.grid.conveyorTextureY;
 		
-			if( belt.renderer.enabled )
+			if(belt != null && belt.renderer.enabled )
 			{
 			
 				belt.renderer.materials[ materialIndex ].SetTextureOffset( textureName, uvOffset );

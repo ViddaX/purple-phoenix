@@ -7,55 +7,59 @@ namespace pp {
 	public class Combiner : Conveyor {
 		public List<Item> inventory = new List<Item>();
 		public Recipe recipe { set; get; }
+		private int[] amounts;
 
 		public Combiner(BlockType type, Recipe recipe) : base(type) {
 			this.recipe = recipe;
+			ResetProgress();
 		}
 
 		public Combiner(Recipe recipe) : this(BlockType.Combiner, recipe) {
 		}
 
-		public int GetRequiredPieceCount() {
-			int count = 0;
-			foreach (RecipePiece piece in recipe.pieces)
-				count += piece.amount;
-
-			return count;
-		}
-
 		public override void OnEnter (Item item) {
-			if (item.gameObject.renderer != null)
-				item.gameObject.renderer.enabled = false;
-			inventory.Add(item);
+			bool success = false;
+			for (int i = 0; i < recipe.pieces.Length; i++) {
+				RecipePiece p = recipe.pieces[i];
+				if (p.required == item.itemType) {
+					amounts[i]--;
+					if (amounts[i] < 0) 
+						amounts[i] = 0;
 
-			if (inventory.Count < GetRequiredPieceCount())
-				return;
-
-			TryCombine();
-		}
-
-		public virtual void TryCombine() {
-			// Check if the input matches the recipe
-			bool success = true;
-			foreach (RecipePiece piece in recipe.pieces) {
-				List<Item> matching = inventory.FindAll(x => x.itemType == piece.required);
-				
-				if (matching.Count != piece.amount) {
-					success = false;
+					success = true;
 					break;
 				}
 			}
-			
-			foreach (Item i in inventory)
-				i.Destroy();
-			
-			inventory.Clear();
-			
+
 			if (success) {
-				Item created = Item.NewItem(recipe.creates);
-				created.worldPosition = worldPosition;
-				items.Add(created);
+				item.Destroy();
+			} else {
+				item.Fall(direction.GetDirectionVector());
 			}
+
+			int total = 0;
+			foreach (int i in amounts) {
+				total += i;
+			}
+
+			if (total == 0) {
+				TryCombine();
+				ResetProgress();
+			}
+		}
+
+		public void ResetProgress() {
+			amounts = new int[recipe.pieces.Length];
+
+			for (int i = 0; i < amounts.Length; i++) {
+				amounts[i] = recipe.pieces[i].amount;
+			}
+		}
+
+		public virtual void TryCombine() {
+			Item created = Item.NewItem(recipe.creates);
+			created.worldPosition = worldPosition;
+			items.Add(created);
 		}
 	}
 

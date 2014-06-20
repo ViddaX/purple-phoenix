@@ -10,7 +10,12 @@ namespace pp {
 		public void Update() {
 			if (Time.time < p.nextSpawn || !p.running)
 				return;
-			
+
+			Vector3 dir = p.direction.GetDirectionVector();
+			Block next = p.grid.Get (p.coords.x + (int) dir.x, p.coords.y + (int) dir.z);
+			if (next == null || !(next is Conveyor))
+				return;
+
 			// Time to spawn an item
 			if (p.nextItem != ItemType.None) {
 				Item item = p.Spawn();

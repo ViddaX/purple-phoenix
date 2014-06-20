@@ -32,19 +32,13 @@ namespace pp {
 		public void Fall(Vector3 towards) {
 			gameObject.rigidbody.isKinematic = false;
 
-			towards.Scale(new Vector3(180.0f + (50.0f * (float) rng.NextDouble()),
+			towards.Scale(new Vector3(4.8f + (1.5f * (float) rng.NextDouble()),
 			                          0.0f,
-			                          200.0f + (50.0f * (float) rng.NextDouble())));
-			towards.y = 350.0f;
-
-			if (gameObject.renderer != null) {
-				Color color = gameObject.renderer.material.color;
-				color.a = 0.25f;
-				gameObject.renderer.material.color = color;
-			}
+			                          3.0f + (1.5f * (float) rng.NextDouble())));
+			towards.y = 2.5f;
 
 			if (gameObject.rigidbody != null) {
-				gameObject.rigidbody.AddForce(towards, ForceMode.Acceleration);
+				gameObject.rigidbody.AddForce(towards, ForceMode.VelocityChange);
 			}
 
 			GameObject.Destroy(gameObject, fallFadeDelay);

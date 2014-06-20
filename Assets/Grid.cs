@@ -14,7 +14,8 @@ namespace pp {
 		private const int gridHeight = 40;
 		public ItemProperty ItemProperty;
 		private Block[,] blocks = new Block[gridWidth, gridHeight];
-		public float Money = 1000;
+		public float Money = 1000000000;
+		public float Effeciency { set; get; }
 
 		// Selection parameters
 		public const int MODE_MODIFY = 1; // Add or remove a block
@@ -40,6 +41,7 @@ namespace pp {
 		public Grid() {
 			direction = Direction.EAST;
 			spawnType = BlockType.Conveyor;
+			Effeciency = 100;
 		}
 
 		public void Awake() {
@@ -52,6 +54,11 @@ namespace pp {
 		}
 
 		public void Update() {
+			Effeciency -= Time.deltaTime;
+			if (Effeciency < 0) {
+				Effeciency+=Time.deltaTime;}
+			if (Effeciency > 100) {
+				Effeciency = 100;}
 			if (conveyorTextureY < -1) {
 				conveyorTextureY=1;		
 			}
